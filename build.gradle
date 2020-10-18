@@ -32,4 +32,6 @@ ext {
     constraint_layout_version = "2.0.2"
     junit_version = "4.13.1"
     expresso_version = "3.3.0"
+    glide_version = "4.11.0"
+    legacy_version = "1.0.0"
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CataTube</string>
+    <string name="movie">Movie</string>
+    <string name="television">TV Show</string>
+    <string name="image_show">Image Show</string>
+    <string name="title_show">Title Show</string>
 </resources>
