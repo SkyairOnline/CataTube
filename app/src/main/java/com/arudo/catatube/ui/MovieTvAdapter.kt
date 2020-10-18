@@ -1,9 +1,10 @@
-package com.arudo.catatube
+package com.arudo.catatube.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.arudo.catatube.R
 import com.arudo.catatube.data.MovieTVEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -37,7 +38,7 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
             LayoutInflater.from(parent.context).inflate(R.layout.item_list_movie_tv, parent, false)
         )
 
-    override fun onBindViewHolder(holder: MovieTvAdapter.MovieTvViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieTvViewHolder, position: Int) {
         holder.bind(movieTVData[position])
     }
 
