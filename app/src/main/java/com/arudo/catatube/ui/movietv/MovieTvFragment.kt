@@ -1,4 +1,4 @@
-package com.arudo.catatube.ui
+package com.arudo.catatube.ui.movietv
 
 import android.os.Bundle
 import android.view.LayoutInflater

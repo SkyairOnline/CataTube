@@ -1,9 +1,11 @@
-package com.arudo.catatube.ui
+package com.arudo.catatube.ui.movietv
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.arudo.catatube.DetailActivity
 import com.arudo.catatube.R
 import com.arudo.catatube.data.MovieTVEntity
 import com.bumptech.glide.Glide
@@ -29,6 +31,11 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
                     )
                     .into(imageShow)
                 titleShow.text = movieTVEntity.title
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_LIST, movieTVEntity)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
     }

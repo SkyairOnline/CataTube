@@ -1,4 +1,4 @@
-package com.arudo.catatube.ui
+package com.arudo.catatube.ui.movietv
 
 import androidx.lifecycle.ViewModel
 import com.arudo.catatube.data.MovieTVEntity
