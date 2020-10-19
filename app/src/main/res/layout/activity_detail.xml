@@ -4,16 +4,229 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailActivity">
+    tools:context=".ui.detail.DetailActivity">
+
+    <ImageView
+        android:id="@+id/imgBackground"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
+        android:alpha="0.3"
+        android:contentDescription="@string/image_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <ImageView
         android:id="@+id/imgShow"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_width="150dp"
+        android:layout_height="225dp"
+        android:layout_margin="20dp"
         android:contentDescription="@string/image_show"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/poster_a_start_is_born" />
+        app:layout_constraintBottom_toBottomOf="@id/imgBackground"
+        app:layout_constraintRight_toLeftOf="@+id/lineImageTextTop"
+        app:layout_constraintStart_toStartOf="@id/imgBackground"
+        app:layout_constraintTop_toTopOf="@id/imgBackground"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lineImageTextTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@id/imgShow" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lineTopToTextTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/imgShow" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/title_show"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtSubTitle"
+        app:layout_constraintLeft_toRightOf="@id/lineImageTextTop"
+        app:layout_constraintTop_toBottomOf="@id/lineTopToTextTop" />
+
+    <TextView
+        android:id="@+id/txtSubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/txtSubtitle"
+        app:layout_constraintBottom_toTopOf="@id/txtRating"
+        app:layout_constraintLeft_toRightOf="@id/lineImageTextTop"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+    <TextView
+        android:id="@+id/txtRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/txtRating"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtQuote"
+        app:layout_constraintLeft_toRightOf="@id/lineImageTextTop"
+        app:layout_constraintTop_toBottomOf="@id/txtSubTitle" />
+
+    <TextView
+        android:id="@+id/txtQuote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/quote"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toRightOf="@id/lineImageTextTop"
+        app:layout_constraintTop_toBottomOf="@id/txtRating" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/LineTextTopToImgBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/imgBackground"
+        app:layout_constraintTop_toBottomOf="@id/txtQuote" />
+
+    <TextView
+        android:id="@+id/overviewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/overview"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtOverview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgBackground" />
+
+    <TextView
+        android:id="@+id/txtOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/overview"
+        app:layout_constraintBottom_toTopOf="@id/statusTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overviewTitle" />
+
+    <TextView
+        android:id="@+id/statusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/status"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtOverview" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/status"
+        app:layout_constraintBottom_toTopOf="@id/languageTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusTitle" />
+
+    <TextView
+        android:id="@+id/languageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/language"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtLanguage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+
+    <TextView
+        android:id="@+id/txtLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/language"
+        app:layout_constraintBottom_toTopOf="@id/budgetTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/languageTitle" />
+
+    <TextView
+        android:id="@+id/budgetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/budget"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtBudget"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+    <TextView
+        android:id="@+id/txtBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/txtBudget"
+        app:layout_constraintBottom_toTopOf="@id/revenueTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/budgetTitle" />
+
+    <TextView
+        android:id="@+id/revenueTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/revenue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txtRevenue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBudget" />
+
+    <TextView
+        android:id="@+id/txtRevenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/txtRevenue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/revenueTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

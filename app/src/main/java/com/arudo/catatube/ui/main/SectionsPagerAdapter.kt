@@ -1,4 +1,4 @@
-package com.arudo.catatube.ui
+package com.arudo.catatube.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

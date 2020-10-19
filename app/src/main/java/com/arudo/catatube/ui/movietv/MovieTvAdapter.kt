@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.arudo.catatube.DetailActivity
 import com.arudo.catatube.R
 import com.arudo.catatube.data.MovieTVEntity
+import com.arudo.catatube.ui.detail.DetailActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_list_movie_tv.view.*
 
@@ -26,11 +28,13 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
                 Glide.with(itemView.context)
                     .load(movieTVEntity.image)
                     .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                            .error(R.drawable.ic_broken_image)
+                            RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                                    .transform(CenterCrop(), RoundedCorners(10))
+                                    .error(R.drawable.ic_broken_image)
                     )
                     .into(imageShow)
                 titleShow.text = movieTVEntity.title
+                genreShow.text = movieTVEntity.genre
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.EXTRA_LIST, movieTVEntity)

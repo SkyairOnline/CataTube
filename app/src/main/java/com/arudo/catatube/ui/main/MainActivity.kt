@@ -1,4 +1,4 @@
-package com.arudo.catatube.ui
+package com.arudo.catatube.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
