@@ -43,14 +43,14 @@ class DetailActivity : AppCompatActivity() {
                 )
                 .into(imgBackground)
         txtTitle.text = detail.title
-        getString(R.string.txtSubtitle, detail.year, detail.genre, detail.duration)
-        getString(R.string.txtRating, detail.rating)
+        txtSubTitle.text = getString(R.string.txtSubtitle, detail.year, detail.genre, detail.duration)
+        txtRating.text = getString(R.string.txtRating, detail.rating)
         txtQuote.text = detail.quote
         txtOverview.text = detail.overview
         txtStatus.text = detail.status
         txtLanguage.text = detail.language
-        getString(R.string.txtBudget, detail.budget)
-        getString(R.string.txtRevenue, detail.revenue)
+        txtBudget.text = getString(R.string.txtBudget, detail.budget)
+        txtRevenue.text = getString(R.string.txtRevenue, detail.revenue)
     }
 
     override fun onSupportNavigateUp(): Boolean {

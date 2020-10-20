@@ -4,7 +4,10 @@
     android:id="@+id/layoutBtn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/list_background_home"
     android:padding="10dp">
 
@@ -28,31 +31,33 @@
 
     <TextView
         android:id="@+id/titleShow"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
         android:paddingEnd="20dp"
         android:text="@string/title_show"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/genreShow"
         app:layout_constraintLeft_toRightOf="@id/imageShow"
+        app:layout_constraintRight_toRightOf="@+id/layoutBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/genreShow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingBottom="20dp"
         android:text="@string/genre_show"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/imageShow"
+        app:layout_constraintRight_toRightOf="@+id/layoutBtn"
         app:layout_constraintTop_toBottomOf="@+id/titleShow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

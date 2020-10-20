@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background_home"
     tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
@@ -12,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        app:tabTextColor="@android:color/white" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/teal_200" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"

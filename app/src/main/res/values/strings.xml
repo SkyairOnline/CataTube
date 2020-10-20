@@ -14,8 +14,9 @@
     <string name="budget">Budget</string>
     <string name="revenue">Revenue</string>
     <string name="txtSubtitle">%1$s | %2$s | %3$s</string>
-    <string name="txtRating">%1$s / 100</string>
+    <string name="txtRating">Rating: %1$s/100%%</string>
     <string name="genre_show">Genre Show</string>
     <string name="txtBudget">$ %1$s</string>
     <string name="txtRevenue">$ %1$s</string>
+    <string name="detail_box">Detail Box</string>
 </resources>
