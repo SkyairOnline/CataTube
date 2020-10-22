@@ -37,7 +37,7 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
                 genreShow.text = movieTVEntity.genre
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_LIST, movieTVEntity)
+                    intent.putExtra(DetailActivity.EXTRA_DETAIL, movieTVEntity.id)
                     itemView.context.startActivity(intent)
                 }
             }

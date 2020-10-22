@@ -3,6 +3,7 @@ package com.arudo.catatube.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
 import com.arudo.catatube.data.MovieTVEntity
 import com.bumptech.glide.Glide
@@ -13,8 +14,9 @@ import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
+    private lateinit var detailViewModel: DetailViewModel
     companion object {
-        const val EXTRA_LIST = "extra_list"
+        const val EXTRA_DETAIL = "extra_detail"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,16 +26,24 @@ class DetailActivity : AppCompatActivity() {
             (supportActionBar as ActionBar).title = "Detail CataTube"
             (supportActionBar as ActionBar).setDisplayHomeAsUpEnabled(true)
         }
-        val detail: MovieTVEntity = intent.getParcelableExtra(EXTRA_LIST)!!
+        detailViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(
+            DetailViewModel::class.java
+        )
+        val movieTelevisionId = intent.extras!!.getString(EXTRA_DETAIL) ?: return
+        detailViewModel.setDetailMovieTelevision(movieTelevisionId)
+        val detail: MovieTVEntity = detailViewModel.getDetailMovieTelevision()
         imgShow.tag = detail.image
         Glide.with(this)
-                .load(detail.image)
-                .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                                .transform(CenterCrop(), RoundedCorners(10))
-                                .error(R.drawable.ic_broken_image)
-                )
-                .into(imgShow)
+            .load(detail.image)
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                    .transform(CenterCrop(), RoundedCorners(10))
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imgShow)
         imgBackground.tag = detail.image
         Glide.with(this)
                 .load(detail.image)
