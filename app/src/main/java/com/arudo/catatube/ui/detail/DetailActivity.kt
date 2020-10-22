@@ -25,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
             (supportActionBar as ActionBar).setDisplayHomeAsUpEnabled(true)
         }
         val detail: MovieTVEntity = intent.getParcelableExtra(EXTRA_LIST)!!
+        imgShow.tag = detail.image
         Glide.with(this)
                 .load(detail.image)
                 .apply(
@@ -33,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
                                 .error(R.drawable.ic_broken_image)
                 )
                 .into(imgShow)
+        imgBackground.tag = detail.image
         Glide.with(this)
                 .load(detail.image)
                 .centerCrop()
