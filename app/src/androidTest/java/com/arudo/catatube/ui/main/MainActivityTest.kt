@@ -28,9 +28,9 @@ class MainActivityTest {
     fun mainActivityMovie() {
         onView(withText("Movie")).perform(click())
         onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                        dataDummyMovie.size
-                )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dataDummyMovie.size
+            )
         )
     }
 
@@ -38,22 +38,34 @@ class MainActivityTest {
     fun mainActivityMovieDetail() {
         onView(withText("Movie")).perform(click())
         onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0,
-                        click()
-                )
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
         )
-        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
-        onView(withId(R.id.imgBackground)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
-        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyMovie[0].title)))
-        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("${dataDummyMovie[0].year} | ${dataDummyMovie[0].genre} | ${dataDummyMovie[0].duration}")))
-        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("Rating: ${dataDummyMovie[0].rating}/100%")))
-        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyMovie[0].quote)))
-        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyMovie[0].overview)))
-        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyMovie[0].status)))
-        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyMovie[0].language)))
-        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("$ ${dataDummyMovie[0].budget}")))
-        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("$ ${dataDummyMovie[0].revenue}")))
+        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
+        onView(withId(R.id.imgBackground)).perform(scrollTo())
+            .check(matches(isCompletelyDisplayed()))
+            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
+        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyMovie[0].title)))
+        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("${dataDummyMovie[0].year} | ${dataDummyMovie[0].genre} | ${dataDummyMovie[0].duration}")))
+        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("Rating: ${dataDummyMovie[0].rating}/100%")))
+        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyMovie[0].quote)))
+        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyMovie[0].overview)))
+        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyMovie[0].status)))
+        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyMovie[0].language)))
+        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("$ ${dataDummyMovie[0].budget}")))
+        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("$ ${dataDummyMovie[0].revenue}")))
     }
 
 
@@ -61,9 +73,9 @@ class MainActivityTest {
     fun mainActivityTelevision() {
         onView(withText("TV Show")).perform(click())
         onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                        dataDummyTelevision.size
-                )
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                dataDummyTelevision.size
+            )
         )
     }
 
@@ -71,21 +83,33 @@ class MainActivityTest {
     fun mainActivityTelevisionDetail() {
         onView(withText("TV Show")).perform(click())
         onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        0,
-                        click()
-                )
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
         )
-        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
-        onView(withId(R.id.imgBackground)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
-        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyTelevision[0].title)))
-        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("${dataDummyTelevision[0].year} | ${dataDummyTelevision[0].genre} | ${dataDummyTelevision[0].duration}")))
-        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("Rating: ${dataDummyTelevision[0].rating}/100%")))
-        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyTelevision[0].quote)))
-        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyTelevision[0].overview)))
-        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyTelevision[0].status)))
-        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText(dataDummyTelevision[0].language)))
-        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("$ ${dataDummyTelevision[0].budget}")))
-        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed())).check(matches(withText("$ ${dataDummyTelevision[0].revenue}")))
+        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
+        onView(withId(R.id.imgBackground)).perform(scrollTo())
+            .check(matches(isCompletelyDisplayed()))
+            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
+        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyTelevision[0].title)))
+        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("${dataDummyTelevision[0].year} | ${dataDummyTelevision[0].genre} | ${dataDummyTelevision[0].duration}")))
+        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("Rating: ${dataDummyTelevision[0].rating}/100%")))
+        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyTelevision[0].quote)))
+        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyTelevision[0].overview)))
+        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyTelevision[0].status)))
+        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText(dataDummyTelevision[0].language)))
+        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("$ ${dataDummyTelevision[0].budget}")))
+        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+            .check(matches(withText("$ ${dataDummyTelevision[0].revenue}")))
     }
 }

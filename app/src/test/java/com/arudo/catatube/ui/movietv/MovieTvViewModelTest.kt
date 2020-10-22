@@ -1,5 +1,6 @@
 package com.arudo.catatube.ui.movietv
 
+import com.arudo.catatube.data.MovieTVEntity
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test
@@ -25,5 +26,18 @@ class MovieTvViewModelTest : TestCase() {
         val televisionData = movieTvViewModel.getTelevisions()
         assertNotNull(televisionData)
         assertEquals(20, televisionData.size)
+    }
+
+    @Test
+    fun testZeroData() {
+        val movieData = ArrayList<MovieTVEntity>()
+        assertNotNull(movieData)
+        assertEquals(0, movieData.size)
+    }
+
+    @Test
+    fun testNullData() {
+        val movieData = null
+        assertNull(movieData)
     }
 }

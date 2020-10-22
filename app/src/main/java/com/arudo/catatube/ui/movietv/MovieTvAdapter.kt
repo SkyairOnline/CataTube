@@ -28,9 +28,9 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
                 Glide.with(itemView.context)
                     .load(movieTVEntity.image)
                     .apply(
-                            RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                                    .transform(CenterCrop(), RoundedCorners(10))
-                                    .error(R.drawable.ic_broken_image)
+                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                            .transform(CenterCrop(), RoundedCorners(10))
+                            .error(R.drawable.ic_broken_image)
                     )
                     .into(imageShow)
                 titleShow.text = movieTVEntity.title
