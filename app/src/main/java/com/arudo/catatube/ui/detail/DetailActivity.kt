@@ -1,7 +1,6 @@
 package com.arudo.catatube.ui.detail
 
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
@@ -22,17 +21,15 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        if (supportActionBar != null) {
-            (supportActionBar as ActionBar).title = "Detail CataTube"
-            (supportActionBar as ActionBar).setDisplayHomeAsUpEnabled(true)
-        }
+        supportActionBar?.title = getString(R.string.detail_activity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         detailViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
         ).get(
             DetailViewModel::class.java
         )
-        val movieTelevisionId = intent.extras!!.getString(EXTRA_DETAIL) ?: return
+        val movieTelevisionId = intent.extras?.getString(EXTRA_DETAIL) ?: return
         detailViewModel.setDetailMovieTelevision(movieTelevisionId)
         val detail: MovieTVEntity = detailViewModel.getDetailMovieTelevision()
         imgShow.tag = detail.image
@@ -49,20 +46,21 @@ class DetailActivity : AppCompatActivity() {
                 .load(detail.image)
                 .centerCrop()
                 .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                                .transform(CenterCrop(), RoundedCorners(10))
-                                .error(R.drawable.ic_broken_image)
+                    RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                        .transform(CenterCrop(), RoundedCorners(10))
+                        .error(R.drawable.ic_broken_image)
                 )
-                .into(imgBackground)
+            .into(imgBackground)
         txtTitle.text = detail.title
-        txtSubTitle.text = getString(R.string.txtSubtitle, detail.year, detail.genre, detail.duration)
+        txtSubTitle.text =
+            getString(R.string.txtSubtitle, detail.year, detail.genre, detail.duration)
         txtRating.text = getString(R.string.txtRating, detail.rating)
         txtQuote.text = detail.quote
         txtOverview.text = detail.overview
         txtStatus.text = detail.status
         txtLanguage.text = detail.language
-        txtBudget.text = getString(R.string.txtBudget, detail.budget)
-        txtRevenue.text = getString(R.string.txtRevenue, detail.revenue)
+        txtBudget.text = getString(R.string.txtBudgetRevenue, detail.budget)
+        txtRevenue.text = getString(R.string.txtBudgetRevenue, detail.revenue)
     }
 
     override fun onSupportNavigateUp(): Boolean {

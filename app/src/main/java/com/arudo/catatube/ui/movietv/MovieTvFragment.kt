@@ -36,9 +36,9 @@ class MovieTvFragment : Fragment() {
             MovieTvViewModel::class.java
         )
         items = ArrayList()
-        if (dataStringKey == "Movie") {
+        if (dataStringKey == getString(R.string.movie)) {
             items = movieTvViewModel.getMovies()
-        } else if (dataStringKey == "TV") {
+        } else if (dataStringKey == getString(R.string.tv_show)) {
             items = movieTvViewModel.getTelevisions()
         }
         val adapter = MovieTvAdapter()

@@ -10,8 +10,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-        sectionsPagerAdapter.addFragmentData("Movie", "Movie")
-        sectionsPagerAdapter.addFragmentData("TV", "TV Show")
+        sectionsPagerAdapter.addFragmentData(getString(R.string.movie), getString(R.string.movie))
+        sectionsPagerAdapter.addFragmentData(
+            getString(R.string.tv_show),
+            getString(R.string.tv_show)
+        )
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
         supportActionBar?.elevation = 0f

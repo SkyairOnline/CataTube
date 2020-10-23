@@ -1,12 +1,8 @@
 <resources>
     <string name="app_name">CataTube</string>
-    <string name="movie">Movie</string>
-    <string name="television">TV Show</string>
     <string name="image_show">Image Show</string>
     <string name="title_show">Title Show</string>
     <string name="image_background">Image Background</string>
-    <string name="subtitle">Subtitle</string>
-    <string name="rating">Rating</string>
     <string name="quote">Quote</string>
     <string name="overview">Overview</string>
     <string name="status">Status</string>
@@ -16,7 +12,9 @@
     <string name="txtSubtitle">%1$s | %2$s | %3$s</string>
     <string name="txtRating">Rating: %1$s/100%%</string>
     <string name="genre_show">Genre Show</string>
-    <string name="txtBudget">$ %1$s</string>
-    <string name="txtRevenue">$ %1$s</string>
+    <string name="txtBudgetRevenue">$ %1$s</string>
     <string name="detail_box">Detail Box</string>
+    <string name="detail_activity">Detail CataTube</string>
+    <string name="tv_show">TV Show</string>
+    <string name="movie">Movie</string>
 </resources>
