@@ -1,29 +1,19 @@
 package com.arudo.catatube.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.arudo.catatube.data.MovieTVEntity
-import com.arudo.catatube.utils.DataDummy
+import com.arudo.catatube.data.source.CataTubeRepository
+import com.arudo.catatube.data.source.local.entity.MovieTVEntity
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
     private lateinit var movieTelevisionId: String
-    private lateinit var movieTelevision: MovieTVEntity
+    private lateinit var movieTelevisionType: String
 
-    fun setDetailMovieTelevision(movieTelevisionId: String) {
+    fun setDetailMovieTelevision(movieTelevisionId: String, movieTelevisionType: String) {
         this.movieTelevisionId = movieTelevisionId
+        this.movieTelevisionType = movieTelevisionType
     }
 
-    fun getDetailMovieTelevision(): MovieTVEntity {
-        var movieTelevisionItems = ArrayList<MovieTVEntity>()
-        if (movieTelevisionId.startsWith('M')) {
-            movieTelevisionItems = DataDummy.movieDummyData()
-        } else if (movieTelevisionId.startsWith('T')) {
-            movieTelevisionItems = DataDummy.televisionDummyData()
-        }
-        for (m in movieTelevisionItems) {
-            if (m.id == movieTelevisionId) {
-                movieTelevision = m
-            }
-        }
-        return movieTelevision
-    }
+    fun getDetailMovieTelevision(): LiveData<MovieTVEntity> =
+        cataTubeRepository.getMovieTelevisionData(movieTelevisionId, movieTelevisionType)
 }

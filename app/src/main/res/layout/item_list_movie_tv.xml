@@ -39,19 +39,19 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/genreShow"
+        app:layout_constraintBottom_toTopOf="@+id/overviewShow"
         app:layout_constraintLeft_toRightOf="@id/imageShow"
         app:layout_constraintRight_toRightOf="@+id/layoutBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/genreShow"
+        android:id="@+id/overviewShow"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingBottom="20dp"
-        android:text="@string/genre_show"
+        android:text="@string/overview"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

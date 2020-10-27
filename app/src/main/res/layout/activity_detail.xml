@@ -6,260 +6,275 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutDetailConstraint"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgBackground"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:alpha="0.2"
-            android:contentDescription="@string/image_background"
-            app:layout_constraintBottom_toBottomOf="@id/layoutDetailConstraint"
-            app:layout_constraintEnd_toEndOf="@id/layoutDetailConstraint"
-            app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-        <ImageView
-            android:id="@+id/imgShow"
-            android:layout_width="150dp"
-            android:layout_height="225dp"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/image_show"
-            app:layout_constraintBottom_toTopOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
-
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="0dp"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/title_show"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtSubTitle"
-            app:layout_constraintLeft_toRightOf="@id/imgShow"
-            app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint" />
+            android:layout_gravity="center"
+            android:progressTint="@color/black"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/txtSubTitle"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutDetailConstraint"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="5dp"
-            android:text="@string/txtSubtitle"
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@id/txtRating"
-            app:layout_constraintLeft_toRightOf="@id/imgShow"
-            app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+            android:visibility="visible">
 
-        <TextView
-            android:id="@+id/txtRating"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="5dp"
-            android:text="@string/txtRating"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtQuote"
-            app:layout_constraintLeft_toRightOf="@id/imgShow"
-            app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toBottomOf="@id/txtSubTitle" />
+            <ImageView
+                android:id="@+id/imgBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:alpha="0.2"
+                android:contentDescription="@string/image_background"
+                app:layout_constraintBottom_toBottomOf="@id/layoutDetailConstraint"
+                app:layout_constraintEnd_toEndOf="@id/layoutDetailConstraint"
+                app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/txtQuote"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="5dp"
-            android:text="@string/quote"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@id/detailBox"
-            app:layout_constraintLeft_toRightOf="@id/imgShow"
-            app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toBottomOf="@id/txtRating" />
+            <ImageView
+                android:id="@+id/imgShow"
+                android:layout_width="150dp"
+                android:layout_height="225dp"
+                android:layout_margin="20dp"
+                android:contentDescription="@string/image_show"
+                app:layout_constraintBottom_toTopOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint"
+                app:srcCompat="@drawable/ic_launcher_background" />
 
-        <View
-            android:id="@+id/detailBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/background_detail_box"
-            android:contentDescription="@string/detail_box"
-            app:layout_constraintBottom_toBottomOf="@+id/layoutDetailConstraint"
-            app:layout_constraintEnd_toEndOf="@+id/layoutDetailConstraint"
-            app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
-            app:layout_constraintTop_toBottomOf="@id/imgShow" />
 
-        <TextView
-            android:id="@+id/overviewTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/overview"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtOverview"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toTopOf="@id/detailBox" />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/title_show"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtSubTitle"
+                app:layout_constraintLeft_toRightOf="@id/imgShow"
+                app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toTopOf="@+id/layoutDetailConstraint" />
 
-        <TextView
-            android:id="@+id/txtOverview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/overview"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/statusTitle"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/overviewTitle" />
+            <TextView
+                android:id="@+id/txtSubTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:text="@string/txtSubtitle"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/txtRating"
+                app:layout_constraintLeft_toRightOf="@id/imgShow"
+                app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
-        <TextView
-            android:id="@+id/statusTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/status"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtStatus"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/txtOverview" />
+            <TextView
+                android:id="@+id/txtRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:text="@string/txtRating"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtQuote"
+                app:layout_constraintLeft_toRightOf="@id/imgShow"
+                app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toBottomOf="@id/txtSubTitle" />
 
-        <TextView
-            android:id="@+id/txtStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/status"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/languageTitle"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/statusTitle" />
+            <TextView
+                android:id="@+id/txtQuote"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:text="@string/quote"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@id/detailBox"
+                app:layout_constraintLeft_toRightOf="@id/imgShow"
+                app:layout_constraintRight_toRightOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toBottomOf="@id/txtRating" />
 
-        <TextView
-            android:id="@+id/languageTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/language"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtLanguage"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+            <View
+                android:id="@+id/detailBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/background_detail_box"
+                android:contentDescription="@string/detail_box"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutDetailConstraint"
+                app:layout_constraintEnd_toEndOf="@+id/layoutDetailConstraint"
+                app:layout_constraintStart_toStartOf="@+id/layoutDetailConstraint"
+                app:layout_constraintTop_toBottomOf="@id/imgShow" />
 
-        <TextView
-            android:id="@+id/txtLanguage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/language"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/budgetTitle"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/languageTitle" />
+            <TextView
+                android:id="@+id/overviewTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/overview"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtOverview"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toTopOf="@id/detailBox" />
 
-        <TextView
-            android:id="@+id/budgetTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/budget"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtBudget"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+            <TextView
+                android:id="@+id/txtOverview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/overview"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toTopOf="@id/statusTitle"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/overviewTitle" />
 
-        <TextView
-            android:id="@+id/txtBudget"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/txtBudgetRevenue"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/revenueTitle"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/budgetTitle" />
+            <TextView
+                android:id="@+id/statusTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/status"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtStatus"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/txtOverview" />
 
-        <TextView
-            android:id="@+id/revenueTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/revenue"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/txtRevenue"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/txtBudget" />
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/status"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toTopOf="@id/languageTitle"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/statusTitle" />
 
-        <TextView
-            android:id="@+id/txtRevenue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="20dp"
-            android:text="@string/txtBudgetRevenue"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="@id/detailBox"
-            app:layout_constraintEnd_toEndOf="@id/detailBox"
-            app:layout_constraintStart_toStartOf="@id/detailBox"
-            app:layout_constraintTop_toBottomOf="@id/revenueTitle" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/languageTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/language"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtLanguage"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+
+            <TextView
+                android:id="@+id/txtLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/language"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toTopOf="@id/budgetTitle"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/languageTitle" />
+
+            <TextView
+                android:id="@+id/budgetTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/budget"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtBudget"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+            <TextView
+                android:id="@+id/txtBudget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/txtBudgetRevenue"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toTopOf="@id/revenueTitle"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/budgetTitle" />
+
+            <TextView
+                android:id="@+id/revenueTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/revenue"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/txtRevenue"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/txtBudget" />
+
+            <TextView
+                android:id="@+id/txtRevenue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/txtBudgetRevenue"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@id/detailBox"
+                app:layout_constraintEnd_toEndOf="@id/detailBox"
+                app:layout_constraintStart_toStartOf="@id/detailBox"
+                app:layout_constraintTop_toBottomOf="@id/revenueTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 
 </ScrollView>
