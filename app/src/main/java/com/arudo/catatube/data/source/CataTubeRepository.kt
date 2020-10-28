@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.arudo.catatube.data.source.local.entity.MovieTVEntity
 import com.arudo.catatube.data.source.remote.RemoteDataSource
-import com.arudo.catatube.data.source.remote.response.MovieTVResponse
+import com.arudo.catatube.data.source.remote.response.MovieListResponse
+import com.arudo.catatube.data.source.remote.response.MovieResponse
+import com.arudo.catatube.data.source.remote.response.TVListResponse
+import com.arudo.catatube.data.source.remote.response.TVResponse
 
 class CataTubeRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     CataTubeDataSource {
@@ -19,67 +22,104 @@ class CataTubeRepository private constructor(private val remoteDataSource: Remot
             }
     }
 
-    override fun getMoviesTelevisionsList(dataStringKey: String): LiveData<ArrayList<MovieTVEntity>> {
-        val movieTelevisionListResult = MutableLiveData<ArrayList<MovieTVEntity>>()
-        remoteDataSource.getMoviesTelevisionsList(
-            dataStringKey,
-            object : RemoteDataSource.LoadMovieTelevisionListCallback {
-                override fun onAllMoviesTelevisionsListReceived(movieTelevisionListResponse: ArrayList<MovieTVResponse>) {
+    override fun getMoviesList(dataStringKey: String): LiveData<ArrayList<MovieTVEntity>> {
+        val movieListResult = MutableLiveData<ArrayList<MovieTVEntity>>()
+        remoteDataSource.getMoviesList(
+            object : RemoteDataSource.LoadMovieListCallback {
+                override fun onAllMoviesListReceived(movieListResponse: MovieListResponse) {
                     val movieTelevisionList = ArrayList<MovieTVEntity>()
-                    for (response in movieTelevisionListResponse) {
+                    for (response in movieListResponse.results!!) {
                         movieTelevisionList.add(
                             MovieTVEntity(
-                                response.id,
-                                response.image,
-                                response.title,
-                                response.year,
-                                response.genre,
-                                response.duration,
-                                response.rating,
-                                response.quote,
-                                response.overview,
-                                response.status,
-                                response.language,
-                                response.budget,
-                                response.revenue,
-                                response.type,
+                                id = response.id,
+                                image = response.posterPath,
+                                title = response.title,
+                                overview = response.overview,
+                                status = dataStringKey
                             )
                         )
                     }
-                    movieTelevisionListResult.postValue(movieTelevisionList)
+                    movieListResult.postValue(movieTelevisionList)
                 }
 
             })
 
-        return movieTelevisionListResult
+        return movieListResult
     }
 
-    override fun getMovieTelevisionData(
-        movieTelevisionId: String,
-        movieTelevisionType: String
+    override fun getTelevisionsList(dataStringKey: String): LiveData<ArrayList<MovieTVEntity>> {
+        val televisionListResult = MutableLiveData<ArrayList<MovieTVEntity>>()
+        remoteDataSource.getTelevisionsList(
+            object : RemoteDataSource.LoadTelevisionListCallBack {
+                override fun onAllTelevisionsListReceived(televisionListResponse: TVListResponse) {
+                    val movieTelevisionList = ArrayList<MovieTVEntity>()
+                    for (response in televisionListResponse.results!!) {
+                        movieTelevisionList.add(
+                            MovieTVEntity(
+                                id = response.id,
+                                image = response.posterPath,
+                                title = response.name,
+                                overview = response.overview,
+                                status = dataStringKey
+                            )
+                        )
+                    }
+                    televisionListResult.postValue(movieTelevisionList)
+                }
+
+            })
+
+        return televisionListResult
+    }
+
+    override fun getMovieData(
+        movieId: Int,
+        movieType: String
     ): LiveData<MovieTVEntity> {
         val movieTelevisionDataResult = MutableLiveData<MovieTVEntity>()
-        remoteDataSource.getMovieTelevisionData(
-            movieTelevisionId,
-            movieTelevisionType,
-            object : RemoteDataSource.LoadMovieTelevisionDataCallback {
-                override fun onMoviesTelevisionDataReceived(movieTelevisionDataResponse: MovieTVResponse) {
+        remoteDataSource.getMovieData(
+            movieId,
+            object : RemoteDataSource.LoadMovieDataCallBack {
+                override fun onMovieDataReceived(movieResponse: MovieResponse) {
                     movieTelevisionDataResult.postValue(
                         MovieTVEntity(
-                            movieTelevisionDataResponse.id,
-                            movieTelevisionDataResponse.image,
-                            movieTelevisionDataResponse.title,
-                            movieTelevisionDataResponse.year,
-                            movieTelevisionDataResponse.genre,
-                            movieTelevisionDataResponse.duration,
-                            movieTelevisionDataResponse.rating,
-                            movieTelevisionDataResponse.quote,
-                            movieTelevisionDataResponse.overview,
-                            movieTelevisionDataResponse.status,
-                            movieTelevisionDataResponse.language,
-                            movieTelevisionDataResponse.budget,
-                            movieTelevisionDataResponse.revenue,
-                            movieTelevisionDataResponse.type
+                            id = movieResponse.id,
+                            image = movieResponse.posterPath,
+                            title = movieResponse.title,
+                            date = movieResponse.releaseDate,
+                            duration = movieResponse.runtime,
+                            rating = movieResponse.voteAverage,
+                            quote = movieResponse.tagline,
+                            overview = movieResponse.overview,
+                            status = movieResponse.status,
+                            type = movieType,
+                        )
+                    )
+                }
+            })
+        return movieTelevisionDataResult
+    }
+
+    override fun getTelevisionData(
+        televisionId: Int,
+        televisionType: String
+    ): LiveData<MovieTVEntity> {
+        val movieTelevisionDataResult = MutableLiveData<MovieTVEntity>()
+        remoteDataSource.getTelevisionData(
+            televisionId,
+            object : RemoteDataSource.LoadTelevisionDataCallBack {
+                override fun onTelevisionDataReceived(televisionResponse: TVResponse) {
+                    movieTelevisionDataResult.postValue(
+                        MovieTVEntity(
+                            id = televisionResponse.id,
+                            image = televisionResponse.posterPath,
+                            title = televisionResponse.name,
+                            date = televisionResponse.firstAirDate,
+                            duration = televisionResponse.episodeRunTime?.get(0),
+                            rating = televisionResponse.voteAverage,
+                            overview = televisionResponse.overview,
+                            status = televisionResponse.status,
+                            type = televisionType,
                         )
                     )
                 }

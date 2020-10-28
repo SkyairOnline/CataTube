@@ -33,16 +33,16 @@ class DetailActivity : AppCompatActivity() {
         ).get(
             DetailViewModel::class.java
         )
-        val movieTelevisionId = intent.extras?.getString(EXTRA_DETAIL) ?: return
+        val movieTelevisionId = intent.extras?.getInt(EXTRA_DETAIL) ?: return
         val movieTelevisionType = intent.extras?.getString(EXTRA_TYPE) ?: return
         detailViewModel.setDetailMovieTelevision(movieTelevisionId, movieTelevisionType)
-        detailViewModel.getDetailMovieTelevision().observe(this, {
+        detailViewModel.getDetailMovieTelevision()?.observe(this, {
             if (it != null) {
                 progressBar.visibility = View.GONE
                 layoutDetailConstraint.visibility = View.VISIBLE
                 imgShow.tag = it.image
                 Glide.with(this)
-                    .load(it.image)
+                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${it.image}")
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                             .transform(CenterCrop(), RoundedCorners(10))
@@ -51,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
                     .into(imgShow)
                 imgBackground.tag = it.image
                 Glide.with(this)
-                    .load(it.image)
+                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${it.image}")
                     .centerCrop()
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
@@ -62,16 +62,13 @@ class DetailActivity : AppCompatActivity() {
                 txtTitle.text = it.title
                 txtSubTitle.text =
                     getString(
-                        R.string.txtSubtitle, it.year, it.genre,
+                        R.string.txtSubtitle, it.date,
                         it.duration?.div(60), it.duration?.rem(60)
                     )
                 txtRating.text = getString(R.string.txtRating, it.rating?.times(10))
                 txtQuote.text = it.quote
                 txtOverview.text = it.overview
                 txtStatus.text = it.status
-                txtLanguage.text = it.language
-                txtBudget.text = getString(R.string.txtBudgetRevenue, it.budget)
-                txtRevenue.text = getString(R.string.txtBudgetRevenue, it.revenue)
             }
         })
     }

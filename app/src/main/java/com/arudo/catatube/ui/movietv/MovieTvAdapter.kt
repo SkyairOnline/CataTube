@@ -27,7 +27,7 @@ class MovieTvAdapter : RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder>() 
         fun bind(movieTVEntity: MovieTVEntity) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load(movieTVEntity.image)
+                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${movieTVEntity.image}")
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                             .transform(CenterCrop(), RoundedCorners(10))

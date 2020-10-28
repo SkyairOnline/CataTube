@@ -210,71 +210,11 @@
                 android:paddingEnd="20dp"
                 android:text="@string/language"
                 android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@id/budgetTitle"
+                app:layout_constraintBottom_toBottomOf="@id/detailBox"
                 app:layout_constraintEnd_toEndOf="@id/detailBox"
                 app:layout_constraintStart_toStartOf="@id/detailBox"
                 app:layout_constraintTop_toBottomOf="@id/languageTitle" />
 
-            <TextView
-                android:id="@+id/budgetTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/budget"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/txtBudget"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
-
-            <TextView
-                android:id="@+id/txtBudget"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/txtBudgetRevenue"
-                android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@id/revenueTitle"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/budgetTitle" />
-
-            <TextView
-                android:id="@+id/revenueTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/revenue"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/txtRevenue"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/txtBudget" />
-
-            <TextView
-                android:id="@+id/txtRevenue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="20dp"
-                android:text="@string/txtBudgetRevenue"
-                android:textColor="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="@id/detailBox"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/revenueTitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
-
-
 </ScrollView>

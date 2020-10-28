@@ -1,7 +1,10 @@
 package com.arudo.catatube.data.source.remote
 
 import android.os.Handler
-import com.arudo.catatube.data.source.remote.response.MovieTVResponse
+import com.arudo.catatube.data.source.remote.response.MovieListResponse
+import com.arudo.catatube.data.source.remote.response.MovieResponse
+import com.arudo.catatube.data.source.remote.response.TVListResponse
+import com.arudo.catatube.data.source.remote.response.TVResponse
 import com.arudo.catatube.utils.JsonHelper
 
 class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
@@ -9,8 +12,6 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
     private val handler = Handler()
 
     companion object {
-        private const val serviceLatency: Long = 2000
-
         @Volatile
         private var remoteDataSource: RemoteDataSource? = null
         fun getRemoteDataSource(helper: JsonHelper): RemoteDataSource =
@@ -19,32 +20,45 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
             }
     }
 
-    fun getMoviesTelevisionsList(
-        dataStringKey: String,
-        loadMovieTelevisionListCallback: LoadMovieTelevisionListCallback
-    ) = handler.postDelayed({
-        loadMovieTelevisionListCallback.onAllMoviesTelevisionsListReceived(
-            jsonHelper.loadListMoviesTelevisionData(
-                dataStringKey
-            )
-        )
-    }, serviceLatency)
-
-    fun getMovieTelevisionData(
-        movieTelevisionId: String,
-        movieTelevisionType: String,
-        loadMovieTelevisionDataCallback: LoadMovieTelevisionDataCallback
-    ) = handler.postDelayed({
-        loadMovieTelevisionDataCallback.onMoviesTelevisionDataReceived(
-            jsonHelper.loadMovieTelevisionData(movieTelevisionId, movieTelevisionType)
-        )
-    }, serviceLatency)
-
-    interface LoadMovieTelevisionListCallback {
-        fun onAllMoviesTelevisionsListReceived(movieTelevisionListResponse: ArrayList<MovieTVResponse>)
+    fun getMoviesList(
+        loadMovieListCallback: LoadMovieListCallback
+    ) = handler.post {
+        loadMovieListCallback.onAllMoviesListReceived(jsonHelper.loadListMovies())
     }
 
-    interface LoadMovieTelevisionDataCallback {
-        fun onMoviesTelevisionDataReceived(movieTelevisionDataResponse: MovieTVResponse)
+    fun getTelevisionsList(
+        loadTelevisionListCallback: LoadTelevisionListCallBack
+    ) = handler.post {
+        loadTelevisionListCallback.onAllTelevisionsListReceived(jsonHelper.loadListTelevision())
+    }
+
+    fun getMovieData(
+        movieId: Int,
+        loadMovieDataCallBack: LoadMovieDataCallBack
+    ) = handler.post {
+        loadMovieDataCallBack.onMovieDataReceived(jsonHelper.loadMovie(movieId))
+    }
+
+    fun getTelevisionData(
+        televisionId: Int,
+        loadTelevisionDataCallBack: LoadTelevisionDataCallBack
+    ) = handler.post {
+        loadTelevisionDataCallBack.onTelevisionDataReceived(jsonHelper.loadTelevision(televisionId))
+    }
+
+    interface LoadMovieListCallback {
+        fun onAllMoviesListReceived(movieListResponse: MovieListResponse)
+    }
+
+    interface LoadTelevisionListCallBack {
+        fun onAllTelevisionsListReceived(televisionListResponse: TVListResponse)
+    }
+
+    interface LoadMovieDataCallBack {
+        fun onMovieDataReceived(movieResponse: MovieResponse)
+    }
+
+    interface LoadTelevisionDataCallBack {
+        fun onTelevisionDataReceived(televisionResponse: TVResponse)
     }
 }

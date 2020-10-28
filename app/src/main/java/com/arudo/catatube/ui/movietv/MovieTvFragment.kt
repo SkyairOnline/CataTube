@@ -38,7 +38,7 @@ class MovieTvFragment : Fragment() {
         )
         val movieTvAdapter = MovieTvAdapter()
         rvMovieTV.adapter = movieTvAdapter
-        movieTvViewModel.getMoviesTelevisions(dataStringKey).observe(viewLifecycleOwner, {
+        movieTvViewModel.getMoviesTelevisions(dataStringKey)?.observe(viewLifecycleOwner, {
             if (it != null) {
                 progressBar.visibility = View.GONE
                 rvMovieTV.visibility = View.VISIBLE

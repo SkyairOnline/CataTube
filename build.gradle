@@ -36,5 +36,6 @@ ext {
     legacy_version = "1.0.0"
     androidX_test_version = '1.3.0'
     androidX_test_ext_version = '1.1.2'
-    android_loopj_version= '1.4.9'
+    retrofit2_version = '2.9.0'
+    okhttp3_version = '4.9.0'
 }
