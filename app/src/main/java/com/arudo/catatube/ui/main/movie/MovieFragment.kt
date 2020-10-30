@@ -19,7 +19,7 @@ class MovieFragment : Fragment() {
         rvMovie.visibility = View.GONE
         movieViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(requireActivity())
+            ViewModelFactory.getInstance()
         ).get(
             MovieViewModel::class.java
         )

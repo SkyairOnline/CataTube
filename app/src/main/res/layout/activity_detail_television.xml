@@ -208,6 +208,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
                 android:text="@string/type"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@id/detailBox"

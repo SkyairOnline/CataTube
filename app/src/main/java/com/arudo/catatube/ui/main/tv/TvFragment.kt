@@ -19,7 +19,7 @@ class TvFragment : Fragment() {
         rvTelevision.visibility = View.GONE
         tvViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(requireActivity())
+            ViewModelFactory.getInstance()
         ).get(
             TvViewModel::class.java
         )

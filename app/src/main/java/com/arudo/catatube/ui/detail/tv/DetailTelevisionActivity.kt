@@ -28,7 +28,7 @@ class DetailTelevisionActivity : AppCompatActivity() {
         layoutDetailConstraint.visibility = View.GONE
         detailTelevisionViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(this)
+            ViewModelFactory.getInstance()
         ).get(
             DetailTelevisionViewModel::class.java
         )

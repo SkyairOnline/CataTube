@@ -6,7 +6,6 @@
     <string name="quote">Quote</string>
     <string name="overview">Overview</string>
     <string name="status">Status</string>
-    <string name="language">Language</string>
     <string name="txtSubtitle">%1$s | %2$.0fh %3$.0fm</string>
     <string name="txtRating">Rating: %1$.0f/100%%</string>
     <string name="detail_box">Detail Box</string>
@@ -15,7 +14,7 @@
     <string name="movie">Movie</string>
     <string name="revenue">Revenue</string>
     <string name="budget">Budget</string>
-    <string name="price">$ %1$.0f</string>
+    <string name="price">$ %1$s</string>
     <string name="photo">https://image.tmdb.org/t/p/w440_and_h660_face%1$s</string>
     <string name="type">Type</string>
     <string name="seasonEpisodeNumber">%1$d Seasons, %2$d Episodes</string>

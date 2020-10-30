@@ -181,39 +181,10 @@
                 android:paddingEnd="20dp"
                 android:text="@string/status"
                 android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@id/languageTitle"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/statusTitle" />
-
-            <TextView
-                android:id="@+id/languageTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/language"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/txtLanguage"
-                app:layout_constraintEnd_toEndOf="@id/detailBox"
-                app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/txtStatus" />
-
-            <TextView
-                android:id="@+id/txtLanguage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/language"
-                android:textColor="@android:color/black"
                 app:layout_constraintBottom_toTopOf="@id/budgetTitle"
                 app:layout_constraintEnd_toEndOf="@id/detailBox"
                 app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/languageTitle" />
+                app:layout_constraintTop_toBottomOf="@id/statusTitle" />
 
             <TextView
                 android:id="@+id/budgetTitle"
@@ -229,7 +200,7 @@
                 app:layout_constraintBottom_toTopOf="@id/txtBudget"
                 app:layout_constraintEnd_toEndOf="@id/detailBox"
                 app:layout_constraintStart_toStartOf="@id/detailBox"
-                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+                app:layout_constraintTop_toBottomOf="@id/txtStatus" />
 
             <TextView
                 android:id="@+id/txtBudget"
@@ -266,6 +237,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
                 android:text="@string/price"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@id/detailBox"

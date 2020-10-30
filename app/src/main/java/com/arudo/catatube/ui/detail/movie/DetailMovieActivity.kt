@@ -1,7 +1,10 @@
 package com.arudo.catatube.ui.detail.movie
 
+import android.icu.text.DecimalFormat
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
@@ -20,6 +23,7 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_DETAIL = "extra_detail"
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
@@ -29,7 +33,7 @@ class DetailMovieActivity : AppCompatActivity() {
         layoutDetailConstraint.visibility = View.GONE
         detailMovieViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance(this)
+            ViewModelFactory.getInstance()
         ).get(
             DetailMovieViewModel::class.java
         )
@@ -68,8 +72,8 @@ class DetailMovieActivity : AppCompatActivity() {
                 txtQuote.text = it.tagline
                 txtOverview.text = it.overview
                 txtStatus.text = it.status
-                txtBudget.text = getString(R.string.price, it.budget)
-                txtRevenue.text = getString(R.string.price, it.revenue)
+                txtBudget.text = getString(R.string.price, priceFormatter(it.budget))
+                txtRevenue.text = getString(R.string.price, priceFormatter(it.revenue))
             }
         })
     }
@@ -77,5 +81,11 @@ class DetailMovieActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun priceFormatter(price: Double?): String {
+        val decimalFormat = DecimalFormat("#,###")
+        return decimalFormat.format(price)
     }
 }
