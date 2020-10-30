@@ -1,14 +1,15 @@
 package com.arudo.catatube.ui.detail
 
+import com.arudo.catatube.ui.detail.movie.DetailMovieViewModel
 import com.arudo.catatube.utils.DataDummy
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
-class DetailViewModelTest {
-    private lateinit var detailViewModelMovie: DetailViewModel
-    private lateinit var detailViewModelTelevision: DetailViewModel
+class DetailMovieViewModelTest {
+    private lateinit var detailMovieViewModelMovie: DetailMovieViewModel
+    private lateinit var detailMovieViewModelTelevision: DetailMovieViewModel
     private val dummyDataMovie = DataDummy.movieDummyData()[0]
     private val movieId = dummyDataMovie.id
     private val dummyDataTelevision = DataDummy.televisionDummyData()[0]
@@ -16,16 +17,16 @@ class DetailViewModelTest {
 
     @Before
     fun setUp() {
-        detailViewModelMovie = DetailViewModel()
-        detailViewModelMovie.setDetailMovieTelevision(movieId!!)
-        detailViewModelTelevision = DetailViewModel()
-        detailViewModelMovie.setDetailMovieTelevision(televisionId!!)
+        detailMovieViewModelMovie = DetailMovieViewModel()
+        detailMovieViewModelMovie.setDetailMovieTelevision(movieId!!)
+        detailMovieViewModelTelevision = DetailMovieViewModel()
+        detailMovieViewModelMovie.setDetailMovieTelevision(televisionId!!)
     }
 
     @Test
     fun getDetailMovie() {
-        dummyDataMovie.id?.let { detailViewModelMovie.setDetailMovieTelevision(it) }
-        val movieEntity = detailViewModelMovie.getDetailMovieTelevision()
+        dummyDataMovie.id.let { detailMovieViewModelMovie.setDetailMovieTelevision(it) }
+        val movieEntity = detailMovieViewModelMovie.getDetailMovieTelevision()
         assertNotNull(movieEntity)
         assertEquals(dummyDataMovie.id, movieEntity.id)
         assertEquals(dummyDataMovie.image, movieEntity.image)
@@ -44,8 +45,8 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailTelevision() {
-        dummyDataTelevision.id?.let { detailViewModelMovie.setDetailMovieTelevision(it) }
-        val televisionEntity = detailViewModelMovie.getDetailMovieTelevision()
+        dummyDataTelevision.id.let { detailMovieViewModelMovie.setDetailMovieTelevision(it) }
+        val televisionEntity = detailMovieViewModelMovie.getDetailMovieTelevision()
         assertNotNull(televisionEntity)
         assertEquals(dummyDataTelevision.id, televisionEntity.id)
         assertEquals(dummyDataTelevision.image, televisionEntity.image)

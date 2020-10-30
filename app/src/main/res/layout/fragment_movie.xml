@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movietv.MovieTvFragment">
+    tools:context=".ui.main.movie.MovieFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -16,7 +16,7 @@
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovieTV"
+        android:id="@+id/rvMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"

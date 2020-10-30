@@ -1,12 +1,13 @@
 package com.arudo.catatube.di
 
+import android.content.Context
 import com.arudo.catatube.data.source.CataTubeRepository
-import com.arudo.catatube.data.source.remote.RemoteDataSource
-import com.arudo.catatube.utils.JsonHelper
 
 object Injection {
-    fun provideRepository(): CataTubeRepository {
-        val remoteDataSource = RemoteDataSource.getRemoteDataSource(JsonHelper())
-        return CataTubeRepository.getCataTubeRepository(remoteDataSource)
+    fun provideRepository(context: Context): CataTubeRepository {
+
+        //val remoteDataSource = RemoteDataSource.getInstance(JsonHelper(context))
+
+        return CataTubeRepository.getInstance()
     }
 }

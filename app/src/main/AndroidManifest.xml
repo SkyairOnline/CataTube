@@ -11,15 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CataTube">
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.detail.tv.DetailTelevisionActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailActivity" />
-        <activity android:name=".ui.main.MainActivity" />
+        <activity
+            android:name=".ui.detail.movie.DetailMovieActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

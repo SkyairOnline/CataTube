@@ -7,27 +7,40 @@ import com.arudo.catatube.data.source.remote.response.TVResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
-    @GET("discover/movie?api_key={apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1")
+    @GET("discover/movie")
     fun getMovieList(
-        @Path("apiKey") apiKey: String
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("sort_by") sortBy: String,
+        @Query("include_adult") includeAdult: String,
+        @Query("include_video") includeVideo: String,
+        @Query("page") page: String,
     ): Call<MovieListResponse>
 
-    @GET("discover/tv?api_key={apiKey}&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false")
+    @GET("discover/tv")
     fun getTelevisionList(
-        @Path("apiKey") apiKey: String
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("sort_by") sortBy: String,
+        @Query("page") page: String,
+        @Query("timezone") timezone: String,
+        @Query("include_null_first_air_dates") includeNullFirstAirDates: String,
     ): Call<TVListResponse>
 
-    @GET("movie/{movieId}?api_key={apiKey}&language=en-US")
+    @GET("movie/{movieId}")
     fun getMovieData(
-        @Path("apiKey") apiKey: String,
         @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
     ): Call<MovieResponse>
 
-    @GET("tv/{televisionId}?api_key={apiKey}&language=en-US")
+    @GET("tv/{televisionId}")
     fun getTelevisionData(
-        @Path("apiKey") apiKey: String,
         @Path("televisionId") televisionId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
     ): Call<TVResponse>
 }

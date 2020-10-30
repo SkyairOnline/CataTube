@@ -1,129 +1,115 @@
 package com.arudo.catatube.data.source
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.arudo.catatube.data.source.local.entity.MovieTVEntity
-import com.arudo.catatube.data.source.remote.RemoteDataSource
-import com.arudo.catatube.data.source.remote.response.MovieListResponse
-import com.arudo.catatube.data.source.remote.response.MovieResponse
-import com.arudo.catatube.data.source.remote.response.TVListResponse
-import com.arudo.catatube.data.source.remote.response.TVResponse
+import com.arudo.catatube.data.source.remote.response.*
+import com.arudo.catatube.utils.ApiConfig
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class CataTubeRepository private constructor(private val remoteDataSource: RemoteDataSource) :
-    CataTubeDataSource {
+class CataTubeRepository {
+
+    private val apiKey = "f895c2153f5a11853f009558d0b0ee2a"
 
     companion object {
         @Volatile
         private var cataTubeRepository: CataTubeRepository? = null
 
-        fun getCataTubeRepository(remoteData: RemoteDataSource): CataTubeRepository =
-            cataTubeRepository ?: synchronized(this) {
-                cataTubeRepository ?: CataTubeRepository(remoteData)
+        fun getInstance(): CataTubeRepository {
+            return cataTubeRepository ?: synchronized(this) {
+                cataTubeRepository ?: CataTubeRepository()
             }
+        }
     }
 
-    override fun getMoviesList(dataStringKey: String): LiveData<ArrayList<MovieTVEntity>> {
-        val movieListResult = MutableLiveData<ArrayList<MovieTVEntity>>()
-        remoteDataSource.getMoviesList(
-            object : RemoteDataSource.LoadMovieListCallback {
-                override fun onAllMoviesListReceived(movieListResponse: MovieListResponse) {
-                    val movieTelevisionList = ArrayList<MovieTVEntity>()
-                    for (response in movieListResponse.results!!) {
-                        movieTelevisionList.add(
-                            MovieTVEntity(
-                                id = response.id,
-                                image = response.posterPath,
-                                title = response.title,
-                                overview = response.overview,
-                                status = dataStringKey
-                            )
-                        )
-                    }
-                    movieListResult.postValue(movieTelevisionList)
+    fun getMoviesList(): LiveData<ArrayList<MovieResultsItem>> {
+        val movieListResult = MutableLiveData<ArrayList<MovieResultsItem>>()
+        val client = ApiConfig.getApiService()
+            .getMovieList(apiKey, "en-US", "popularity.desc", "false", "false", "1")
+        client.enqueue(
+            object : Callback<MovieListResponse> {
+                override fun onResponse(
+                    call: Call<MovieListResponse>,
+                    response: Response<MovieListResponse>
+                ) {
+                    movieListResult.postValue(response.body()?.results)
                 }
 
-            })
-
+                override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+                }
+            }
+        )
         return movieListResult
     }
 
-    override fun getTelevisionsList(dataStringKey: String): LiveData<ArrayList<MovieTVEntity>> {
-        val televisionListResult = MutableLiveData<ArrayList<MovieTVEntity>>()
-        remoteDataSource.getTelevisionsList(
-            object : RemoteDataSource.LoadTelevisionListCallBack {
-                override fun onAllTelevisionsListReceived(televisionListResponse: TVListResponse) {
-                    val movieTelevisionList = ArrayList<MovieTVEntity>()
-                    for (response in televisionListResponse.results!!) {
-                        movieTelevisionList.add(
-                            MovieTVEntity(
-                                id = response.id,
-                                image = response.posterPath,
-                                title = response.name,
-                                overview = response.overview,
-                                status = dataStringKey
-                            )
-                        )
-                    }
-                    televisionListResult.postValue(movieTelevisionList)
+    fun getTelevisionsList(): LiveData<ArrayList<TelevisionResultsItem>> {
+        val televisionListResult = MutableLiveData<ArrayList<TelevisionResultsItem>>()
+        val client = ApiConfig.getApiService().getTelevisionList(
+            apiKey,
+            "en-US",
+            "popularity.desc",
+            "1",
+            "America%2FNew_York",
+            "false"
+        )
+        client.enqueue(
+            object : Callback<TVListResponse> {
+                override fun onResponse(
+                    call: Call<TVListResponse>,
+                    response: Response<TVListResponse>
+                ) {
+                    televisionListResult.postValue(response.body()?.results)
                 }
 
-            })
-
+                override fun onFailure(call: Call<TVListResponse>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+                }
+            }
+        )
         return televisionListResult
     }
 
-    override fun getMovieData(
-        movieId: Int,
-        movieType: String
-    ): LiveData<MovieTVEntity> {
-        val movieTelevisionDataResult = MutableLiveData<MovieTVEntity>()
-        remoteDataSource.getMovieData(
-            movieId,
-            object : RemoteDataSource.LoadMovieDataCallBack {
-                override fun onMovieDataReceived(movieResponse: MovieResponse) {
-                    movieTelevisionDataResult.postValue(
-                        MovieTVEntity(
-                            id = movieResponse.id,
-                            image = movieResponse.posterPath,
-                            title = movieResponse.title,
-                            date = movieResponse.releaseDate,
-                            duration = movieResponse.runtime,
-                            rating = movieResponse.voteAverage,
-                            quote = movieResponse.tagline,
-                            overview = movieResponse.overview,
-                            status = movieResponse.status,
-                            type = movieType,
-                        )
-                    )
+    fun getMovieData(movieId: Int): LiveData<MovieResponse> {
+        val movieDataResult = MutableLiveData<MovieResponse>()
+        val client = ApiConfig.getApiService().getMovieData(movieId, apiKey, "en-US")
+        client.enqueue(
+            object : Callback<MovieResponse> {
+                override fun onResponse(
+                    call: Call<MovieResponse>,
+                    response: Response<MovieResponse>
+                ) {
+                    movieDataResult.postValue(response.body())
                 }
-            })
-        return movieTelevisionDataResult
+
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+                }
+            }
+        )
+        return movieDataResult
     }
 
-    override fun getTelevisionData(
-        televisionId: Int,
-        televisionType: String
-    ): LiveData<MovieTVEntity> {
-        val movieTelevisionDataResult = MutableLiveData<MovieTVEntity>()
-        remoteDataSource.getTelevisionData(
-            televisionId,
-            object : RemoteDataSource.LoadTelevisionDataCallBack {
-                override fun onTelevisionDataReceived(televisionResponse: TVResponse) {
-                    movieTelevisionDataResult.postValue(
-                        MovieTVEntity(
-                            id = televisionResponse.id,
-                            image = televisionResponse.posterPath,
-                            title = televisionResponse.name,
-                            date = televisionResponse.firstAirDate,
-                            duration = televisionResponse.episodeRunTime?.get(0),
-                            rating = televisionResponse.voteAverage,
-                            overview = televisionResponse.overview,
-                            status = televisionResponse.status,
-                            type = televisionType,
-                        )
-                    )
+    fun getTelevisionData(televisionId: Int): LiveData<TVResponse> {
+        val televisionDataResult = MutableLiveData<TVResponse>()
+        val client = ApiConfig.getApiService().getTelevisionData(televisionId, apiKey, "en-US")
+        client.enqueue(
+            object : Callback<TVResponse> {
+                override fun onResponse(
+                    call: Call<TVResponse>,
+                    response: Response<TVResponse>
+                ) {
+                    televisionDataResult.postValue(response.body())
                 }
-            })
-        return movieTelevisionDataResult
+
+                override fun onFailure(call: Call<TVResponse>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+                }
+            }
+        )
+        return televisionDataResult
     }
 }

@@ -1,14 +1,14 @@
-package com.arudo.catatube.ui.movietv
+package com.arudo.catatube.ui.movie
 
 import junit.framework.TestCase
 
-class MovieTvViewModelTest : TestCase() {
+class MovieViewModelTest : TestCase() {
 
-//    private lateinit var movieTvViewModel: MovieTvViewModel
+//    private lateinit var movieTvViewModel: MovieViewModel
 //
 //    @Before
 //    override fun setUp() {
-//        movieTvViewModel = MovieTvViewModel()
+//        movieTvViewModel = MovieViewModel()
 //    }
 //
 //    @Test

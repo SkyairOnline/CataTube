@@ -1,4 +1,4 @@
-package com.arudo.catatube.ui.detail
+package com.arudo.catatube.ui.detail.movie
 
 import android.os.Bundle
 import android.view.View
@@ -10,48 +10,47 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detail_movie.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailMovieActivity : AppCompatActivity() {
 
-    private lateinit var detailViewModel: DetailViewModel
+    private lateinit var detailMovieViewModel: DetailMovieViewModel
+
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
-        const val EXTRA_TYPE = "extra_type"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_detail_movie)
         supportActionBar?.title = getString(R.string.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         progressBar.visibility = View.VISIBLE
         layoutDetailConstraint.visibility = View.GONE
-        detailViewModel = ViewModelProvider(
+        detailMovieViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getViewModelFactory()
+            ViewModelFactory.getInstance(this)
         ).get(
-            DetailViewModel::class.java
+            DetailMovieViewModel::class.java
         )
         val movieTelevisionId = intent.extras?.getInt(EXTRA_DETAIL) ?: return
-        val movieTelevisionType = intent.extras?.getString(EXTRA_TYPE) ?: return
-        detailViewModel.setDetailMovieTelevision(movieTelevisionId, movieTelevisionType)
-        detailViewModel.getDetailMovieTelevision()?.observe(this, {
+        detailMovieViewModel.setDetailMovie(movieTelevisionId)
+        detailMovieViewModel.getDetailMovie().observe(this, {
             if (it != null) {
                 progressBar.visibility = View.GONE
                 layoutDetailConstraint.visibility = View.VISIBLE
-                imgShow.tag = it.image
+                imgShow.tag = it.posterPath
                 Glide.with(this)
-                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${it.image}")
+                    .load(getString(R.string.photo, it.posterPath))
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                             .transform(CenterCrop(), RoundedCorners(10))
                             .error(R.drawable.ic_broken_image)
                     )
                     .into(imgShow)
-                imgBackground.tag = it.image
+                imgBackground.tag = it.posterPath
                 Glide.with(this)
-                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${it.image}")
+                    .load(getString(R.string.photo, it.posterPath))
                     .centerCrop()
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
@@ -62,13 +61,15 @@ class DetailActivity : AppCompatActivity() {
                 txtTitle.text = it.title
                 txtSubTitle.text =
                     getString(
-                        R.string.txtSubtitle, it.date,
-                        it.duration?.div(60), it.duration?.rem(60)
+                        R.string.txtSubtitle, it.releaseDate,
+                        it.runtime?.div(60), it.runtime?.rem(60)
                     )
-                txtRating.text = getString(R.string.txtRating, it.rating?.times(10))
-                txtQuote.text = it.quote
+                txtRating.text = getString(R.string.txtRating, it.voteAverage?.times(10))
+                txtQuote.text = it.tagline
                 txtOverview.text = it.overview
                 txtStatus.text = it.status
+                txtBudget.text = getString(R.string.price, it.budget)
+                txtRevenue.text = getString(R.string.price, it.revenue)
             }
         })
     }
