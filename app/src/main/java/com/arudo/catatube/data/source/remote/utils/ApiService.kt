@@ -1,9 +1,9 @@
-package com.arudo.catatube.utils
+package com.arudo.catatube.data.source.remote.utils
 
-import com.arudo.catatube.data.source.remote.response.MovieListResponse
-import com.arudo.catatube.data.source.remote.response.MovieResponse
-import com.arudo.catatube.data.source.remote.response.TVListResponse
-import com.arudo.catatube.data.source.remote.response.TVResponse
+import com.arudo.catatube.data.source.local.entity.MovieEntity
+import com.arudo.catatube.data.source.local.entity.MovieListResponse
+import com.arudo.catatube.data.source.local.entity.TVEntity
+import com.arudo.catatube.data.source.local.entity.TVListResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -35,12 +35,12 @@ interface ApiService {
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): Call<MovieResponse>
+    ): Call<MovieEntity>
 
     @GET("tv/{televisionId}")
     fun getTelevisionData(
         @Path("televisionId") televisionId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): Call<TVResponse>
+    ): Call<TVEntity>
 }

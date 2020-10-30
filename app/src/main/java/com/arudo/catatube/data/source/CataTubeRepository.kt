@@ -4,8 +4,8 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.arudo.catatube.data.source.remote.response.*
-import com.arudo.catatube.utils.ApiConfig
+import com.arudo.catatube.data.source.local.entity.*
+import com.arudo.catatube.data.source.remote.utils.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,19 +73,19 @@ class CataTubeRepository {
         return televisionListResult
     }
 
-    fun getMovieData(movieId: Int): LiveData<MovieResponse> {
-        val movieDataResult = MutableLiveData<MovieResponse>()
+    fun getMovieData(movieId: Int): LiveData<MovieEntity> {
+        val movieDataResult = MutableLiveData<MovieEntity>()
         val client = ApiConfig.getApiService().getMovieData(movieId, apiKey, "en-US")
         client.enqueue(
-            object : Callback<MovieResponse> {
+            object : Callback<MovieEntity> {
                 override fun onResponse(
-                    call: Call<MovieResponse>,
-                    response: Response<MovieResponse>
+                    call: Call<MovieEntity>,
+                    entity: Response<MovieEntity>
                 ) {
-                    movieDataResult.postValue(response.body())
+                    movieDataResult.postValue(entity.body())
                 }
 
-                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                override fun onFailure(call: Call<MovieEntity>, t: Throwable) {
                     Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
                 }
             }
@@ -93,19 +93,19 @@ class CataTubeRepository {
         return movieDataResult
     }
 
-    fun getTelevisionData(televisionId: Int): LiveData<TVResponse> {
-        val televisionDataResult = MutableLiveData<TVResponse>()
+    fun getTelevisionData(televisionId: Int): LiveData<TVEntity> {
+        val televisionDataResult = MutableLiveData<TVEntity>()
         val client = ApiConfig.getApiService().getTelevisionData(televisionId, apiKey, "en-US")
         client.enqueue(
-            object : Callback<TVResponse> {
+            object : Callback<TVEntity> {
                 override fun onResponse(
-                    call: Call<TVResponse>,
-                    response: Response<TVResponse>
+                    call: Call<TVEntity>,
+                    entity: Response<TVEntity>
                 ) {
-                    televisionDataResult.postValue(response.body())
+                    televisionDataResult.postValue(entity.body())
                 }
 
-                override fun onFailure(call: Call<TVResponse>, t: Throwable) {
+                override fun onFailure(call: Call<TVEntity>, t: Throwable) {
                     Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
                 }
             }

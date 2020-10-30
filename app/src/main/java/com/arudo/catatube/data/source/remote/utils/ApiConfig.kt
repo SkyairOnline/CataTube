@@ -1,4 +1,4 @@
-package com.arudo.catatube.utils
+package com.arudo.catatube.data.source.remote.utils
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

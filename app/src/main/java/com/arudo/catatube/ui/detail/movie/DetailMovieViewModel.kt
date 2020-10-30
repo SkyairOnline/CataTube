@@ -3,7 +3,7 @@ package com.arudo.catatube.ui.detail.movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.arudo.catatube.data.source.CataTubeRepository
-import com.arudo.catatube.data.source.remote.response.MovieResponse
+import com.arudo.catatube.data.source.local.entity.MovieEntity
 import kotlin.properties.Delegates
 
 class DetailMovieViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
@@ -13,6 +13,6 @@ class DetailMovieViewModel(private val cataTubeRepository: CataTubeRepository) :
         this.movieId = movieId
     }
 
-    fun getDetailMovie(): LiveData<MovieResponse> = cataTubeRepository.getMovieData(movieId)
+    fun getDetailMovie(): LiveData<MovieEntity> = cataTubeRepository.getMovieData(movieId)
 
 }

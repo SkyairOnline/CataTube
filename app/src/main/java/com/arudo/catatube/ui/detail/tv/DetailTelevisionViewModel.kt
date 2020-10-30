@@ -3,7 +3,7 @@ package com.arudo.catatube.ui.detail.tv
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.arudo.catatube.data.source.CataTubeRepository
-import com.arudo.catatube.data.source.remote.response.TVResponse
+import com.arudo.catatube.data.source.local.entity.TVEntity
 import kotlin.properties.Delegates
 
 class DetailTelevisionViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
@@ -13,7 +13,7 @@ class DetailTelevisionViewModel(private val cataTubeRepository: CataTubeReposito
         this.televisionId = televisionId
     }
 
-    fun getDetailTelevision(): LiveData<TVResponse> =
+    fun getDetailTelevision(): LiveData<TVEntity> =
         cataTubeRepository.getTelevisionData(televisionId)
 
 }

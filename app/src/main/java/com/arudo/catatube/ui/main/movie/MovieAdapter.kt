@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
-import com.arudo.catatube.data.source.remote.response.MovieResultsItem
+import com.arudo.catatube.data.source.local.entity.MovieResultsItem
 import com.arudo.catatube.ui.detail.movie.DetailMovieActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
