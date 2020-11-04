@@ -18,4 +18,5 @@
     <string name="photo">https://image.tmdb.org/t/p/w440_and_h660_face%1$s</string>
     <string name="type">Type</string>
     <string name="seasonEpisodeNumber">%1$d Seasons, %2$d Episodes</string>
+    <string name="patternPrice">#,###</string>
 </resources>

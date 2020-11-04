@@ -27,7 +27,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         fun bind(movieResultsItem: MovieResultsItem) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${movieResultsItem.posterPath}")
+                    .load(itemView.context.getString(R.string.photo, movieResultsItem.posterPath))
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                             .transform(CenterCrop(), RoundedCorners(10))

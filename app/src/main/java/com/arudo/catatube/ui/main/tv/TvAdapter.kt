@@ -27,7 +27,12 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TVViewHolder>() {
         fun bind(televisionResultsItem: TelevisionResultsItem) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w440_and_h660_face${televisionResultsItem.posterPath}")
+                    .load(
+                        itemView.context.getString(
+                            R.string.photo,
+                            televisionResultsItem.posterPath
+                        )
+                    )
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_image_loading)
                             .transform(CenterCrop(), RoundedCorners(10))

@@ -85,7 +85,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun priceFormatter(price: Double?): String {
-        val decimalFormat = DecimalFormat("#,###")
+        val decimalFormat = DecimalFormat(getString(R.string.patternPrice))
         return decimalFormat.format(price)
     }
 }

@@ -1,5 +1,6 @@
 package com.arudo.catatube.data.source.remote.utils
 
+import com.arudo.catatube.BuildConfig
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +20,7 @@ class ApiConfig {
             IdleResourcesUtils.registerIdlingResources(client)
             val retrofit = Retrofit
                 .Builder()
-                .baseUrl("https://api.themoviedb.org/3/".toHttpUrl())
+                .baseUrl(BuildConfig.WEB_API.toHttpUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

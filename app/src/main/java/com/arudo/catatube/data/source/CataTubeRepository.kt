@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.arudo.catatube.BuildConfig
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.remote.utils.ApiConfig
 import retrofit2.Call
@@ -12,7 +13,7 @@ import retrofit2.Response
 
 class CataTubeRepository {
 
-    private val apiKey = "f895c2153f5a11853f009558d0b0ee2a"
+    private val apiKey = BuildConfig.API_KEY
 
     companion object {
         @Volatile
