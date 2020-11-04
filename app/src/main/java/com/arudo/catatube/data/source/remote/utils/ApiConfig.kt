@@ -16,6 +16,7 @@ class ApiConfig {
                         .setLevel(HttpLoggingInterceptor.Level.BODY)
                 )
                 .build()
+            IdleResourcesUtils.registerIdlingResources(client)
             val retrofit = Retrofit
                 .Builder()
                 .baseUrl("https://api.themoviedb.org/3/".toHttpUrl())

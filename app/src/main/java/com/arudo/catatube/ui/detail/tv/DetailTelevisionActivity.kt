@@ -61,8 +61,8 @@ class DetailTelevisionActivity : AppCompatActivity() {
                 txtSubTitle.text = getString(
                     R.string.txtSubtitle,
                     it.firstAirDate,
-                    it.episodeRunTime?.get(0)?.div(60),
-                    it.episodeRunTime?.get(0)?.rem(60)
+                    it.episodeRunTime[0].div(60),
+                    it.episodeRunTime[0].rem(60)
                 )
                 txtRating.text = getString(R.string.txtRating, it.voteAverage?.times(10))
                 txtEpisodeSeason.text =

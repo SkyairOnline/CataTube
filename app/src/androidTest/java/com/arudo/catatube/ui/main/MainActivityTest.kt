@@ -9,7 +9,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.activityScenarioRule
 import com.arudo.catatube.R
-import com.arudo.catatube.utils.DataDummy
+import com.arudo.catatube.data.source.CataTubeRepository
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Rule
@@ -17,9 +17,16 @@ import org.junit.Test
 
 class MainActivityTest {
 
-    private val dataDummyMovie = DataDummy.movieDummyData()
-    private val dataDummyTelevision = DataDummy.televisionDummyData()
+    private var cataTubeRepository = CataTubeRepository()
 
+    private val dataDummyMovieList = cataTubeRepository.getMoviesList().value
+    private val dataDummyMovieId = dataDummyMovieList?.get(0)?.id
+    private val dataDummyMovie = dataDummyMovieId?.let { cataTubeRepository.getMovieData(it).value }
+
+    private val dataDummyTelevisionList = cataTubeRepository.getTelevisionsList().value
+    private val dataDummyTelevisionId = dataDummyTelevisionList?.get(0)?.id
+    private val dataDummyTelevision =
+        dataDummyTelevisionId?.let { cataTubeRepository.getTelevisionData(it).value }
 
     @get:Rule
     var mainActivityRule = activityScenarioRule<MainActivity>()
@@ -27,89 +34,125 @@ class MainActivityTest {
     @Test
     fun mainActivityMovie() {
         onView(withText("Movie")).perform(click())
-        onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                dataDummyMovie.size
+        if (dataDummyMovieList != null) {
+            onView(allOf(withId(R.id.rvMovie), isDisplayed())).perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                    dataDummyMovieList.size
+                )
             )
-        )
+        }
     }
 
     @Test
     fun mainActivityMovieDetail() {
         onView(withText("Movie")).perform(click())
-        onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
+        onView(allOf(withId(R.id.rvMovie), isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 click()
             )
         )
-        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
-        onView(withId(R.id.imgBackground)).perform(scrollTo())
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie[0].image))))
-        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyMovie[0].title)))
-        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("${dataDummyMovie[0].year} | ${dataDummyMovie[0].genre} | ${dataDummyMovie[0].duration}")))
-        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("Rating: ${dataDummyMovie[0].rating}/100%")))
-        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyMovie[0].quote)))
-        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyMovie[0].overview)))
-        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyMovie[0].status)))
-        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyMovie[0].language)))
-        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("$ ${dataDummyMovie[0].budget}")))
-        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("$ ${dataDummyMovie[0].revenue}")))
+        if (dataDummyMovie != null) {
+            onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+                .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie.posterPath))))
+            onView(withId(R.id.imgBackground)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyMovie.posterPath))))
+            onView(withId(R.id.txtTitle)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyMovie.title)))
+            onView(withId(R.id.txtSubTitle)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(
+                    matches(
+                        withText(
+                            "${dataDummyMovie.releaseDate} | ${
+                                dataDummyMovie.runtime?.div(
+                                    60
+                                )
+                            }h ${dataDummyMovie.runtime?.rem(60)}m"
+                        )
+                    )
+                )
+            onView(withId(R.id.txtRating)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("Rating: ${dataDummyMovie.voteAverage?.times(10)}/100%")))
+            onView(withId(R.id.txtQuote)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyMovie.tagline)))
+            onView(withId(R.id.txtOverview)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyMovie.overview)))
+            onView(withId(R.id.txtStatus)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyMovie.status)))
+            onView(withId(R.id.txtBudget)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("$ ${dataDummyMovie.budget}")))
+            onView(withId(R.id.txtRevenue)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("$ ${dataDummyMovie.revenue}")))
+        }
     }
-
 
     @Test
     fun mainActivityTelevision() {
         onView(withText("TV Show")).perform(click())
-        onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
-            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
-                dataDummyTelevision.size
+        if (dataDummyTelevisionList != null) {
+            onView(allOf(withId(R.id.rvTelevision), isDisplayed())).perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                    dataDummyTelevisionList.size
+                )
             )
-        )
+        }
     }
 
     @Test
     fun mainActivityTelevisionDetail() {
         onView(withText("TV Show")).perform(click())
-        onView(allOf(withId(R.id.rvMovieTV), isDisplayed())).perform(
+        onView(allOf(withId(R.id.rvTelevision), isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 click()
             )
         )
-        onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
-        onView(withId(R.id.imgBackground)).perform(scrollTo())
-            .check(matches(isCompletelyDisplayed()))
-            .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision[0].image))))
-        onView(withId(R.id.txtTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyTelevision[0].title)))
-        onView(withId(R.id.txtSubTitle)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("${dataDummyTelevision[0].year} | ${dataDummyTelevision[0].genre} | ${dataDummyTelevision[0].duration}")))
-        onView(withId(R.id.txtRating)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("Rating: ${dataDummyTelevision[0].rating}/100%")))
-        onView(withId(R.id.txtQuote)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyTelevision[0].quote)))
-        onView(withId(R.id.txtOverview)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyTelevision[0].overview)))
-        onView(withId(R.id.txtStatus)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyTelevision[0].status)))
-        onView(withId(R.id.txtLanguage)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText(dataDummyTelevision[0].language)))
-        onView(withId(R.id.txtBudget)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("$ ${dataDummyTelevision[0].budget}")))
-        onView(withId(R.id.txtRevenue)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
-            .check(matches(withText("$ ${dataDummyTelevision[0].revenue}")))
+        if (dataDummyTelevision != null) {
+            onView(withId(R.id.imgShow)).perform(scrollTo()).check(matches(isCompletelyDisplayed()))
+                .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision.posterPath))))
+            onView(withId(R.id.imgBackground)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withTagValue(CoreMatchers.equalTo(dataDummyTelevision.posterPath))))
+            onView(withId(R.id.txtTitle)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyTelevision.name)))
+            onView(withId(R.id.txtSubTitle)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(
+                    matches(
+                        withText(
+                            "${dataDummyTelevision.firstAirDate} | ${
+                                dataDummyTelevision.episodeRunTime[0].div(
+                                    60
+                                )
+                            }h ${dataDummyTelevision.episodeRunTime[0].rem(60)}m"
+                        )
+                    )
+                )
+            onView(withId(R.id.txtRating)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("Rating: ${dataDummyTelevision.voteAverage?.times(10)}/100%")))
+            onView(withId(R.id.txtQuote)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("${dataDummyTelevision.season} Seasons, ${dataDummyTelevision.episode} Episodes")))
+            onView(withId(R.id.txtOverview)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyTelevision.overview)))
+            onView(withId(R.id.txtStatus)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText(dataDummyTelevision.status)))
+            onView(withId(R.id.txtType)).perform(scrollTo())
+                .check(matches(isCompletelyDisplayed()))
+                .check(matches(withText("$ ${dataDummyTelevision.type}")))
+        }
     }
 }
