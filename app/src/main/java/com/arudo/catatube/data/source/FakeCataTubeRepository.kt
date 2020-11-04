@@ -10,20 +10,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CataTubeRepository {
+class FakeCataTubeRepository {
 
     private val apiKey = "f895c2153f5a11853f009558d0b0ee2a"
-
-    companion object {
-        @Volatile
-        private var cataTubeRepository: CataTubeRepository? = null
-
-        fun getInstance(): CataTubeRepository {
-            return cataTubeRepository ?: synchronized(this) {
-                cataTubeRepository ?: CataTubeRepository()
-            }
-        }
-    }
 
     fun getMoviesList(): LiveData<ArrayList<MovieResultsItem>> {
         val movieListResult = MutableLiveData<ArrayList<MovieResultsItem>>()

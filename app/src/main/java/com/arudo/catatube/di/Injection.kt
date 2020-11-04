@@ -4,7 +4,6 @@ import com.arudo.catatube.data.source.CataTubeRepository
 
 object Injection {
     fun provideRepository(): CataTubeRepository {
-
         return CataTubeRepository.getInstance()
     }
 }
