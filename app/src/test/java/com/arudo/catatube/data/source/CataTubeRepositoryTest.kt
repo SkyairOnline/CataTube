@@ -17,11 +17,11 @@ class CataTubeRepositoryTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var cataTubeRepository: FakeCataTubeRepository
+    private lateinit var cataTubeRepository: CataTubeRepository
 
     @Before
     fun setUp() {
-        cataTubeRepository = FakeCataTubeRepository()
+        cataTubeRepository = CataTubeRepository()
     }
 
     @Test
