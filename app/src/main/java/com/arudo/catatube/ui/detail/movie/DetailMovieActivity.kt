@@ -4,10 +4,12 @@ import android.icu.text.DecimalFormat
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
+import com.arudo.catatube.data.vo.Status
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -29,11 +31,9 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_movie)
         supportActionBar?.title = getString(R.string.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        progressBar.visibility = View.VISIBLE
-        layoutDetailConstraint.visibility = View.GONE
         detailMovieViewModel = ViewModelProvider(
             this,
-            ViewModelFactory.getInstance()
+            ViewModelFactory.getInstance(this)
         ).get(
             DetailMovieViewModel::class.java
         )
@@ -41,39 +41,58 @@ class DetailMovieActivity : AppCompatActivity() {
         detailMovieViewModel.setDetailMovie(movieTelevisionId)
         detailMovieViewModel.getDetailMovie().observe(this, {
             if (it != null) {
-                progressBar.visibility = View.GONE
-                layoutDetailConstraint.visibility = View.VISIBLE
-                imgShow.tag = it.posterPath
-                Glide.with(this)
-                    .load(getString(R.string.photo, it.posterPath))
-                    .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                            .transform(CenterCrop(), RoundedCorners(10))
-                            .error(R.drawable.ic_broken_image)
-                    )
-                    .into(imgShow)
-                imgBackground.tag = it.posterPath
-                Glide.with(this)
-                    .load(getString(R.string.photo, it.posterPath))
-                    .centerCrop()
-                    .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                            .transform(CenterCrop(), RoundedCorners(10))
-                            .error(R.drawable.ic_broken_image)
-                    )
-                    .into(imgBackground)
-                txtTitle.text = it.title
-                txtSubTitle.text =
-                    getString(
-                        R.string.txtSubtitle, it.releaseDate,
-                        it.runtime?.div(60), it.runtime?.rem(60)
-                    )
-                txtRating.text = getString(R.string.txtRating, it.voteAverage?.times(10))
-                txtQuote.text = it.tagline
-                txtOverview.text = it.overview
-                txtStatus.text = it.status
-                txtBudget.text = getString(R.string.price, priceFormatter(it.budget))
-                txtRevenue.text = getString(R.string.price, priceFormatter(it.revenue))
+                when (it.status) {
+                    Status.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                        layoutDetailConstraint.visibility = View.GONE
+                    }
+                    Status.SUCCESS -> {
+                        progressBar.visibility = View.GONE
+                        layoutDetailConstraint.visibility = View.VISIBLE
+                        imgShow.tag = it.data?.posterPath
+                        Glide.with(this)
+                            .load(getString(R.string.photo, it.data?.posterPath))
+                            .apply(
+                                RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                                    .transform(CenterCrop(), RoundedCorners(10))
+                                    .error(R.drawable.ic_broken_image)
+                            )
+                            .into(imgShow)
+                        imgBackground.tag = it.data?.posterPath
+                        Glide.with(this)
+                            .load(getString(R.string.photo, it.data?.posterPath))
+                            .centerCrop()
+                            .apply(
+                                RequestOptions.placeholderOf(R.drawable.ic_image_loading)
+                                    .transform(CenterCrop(), RoundedCorners(10))
+                                    .error(R.drawable.ic_broken_image)
+                            )
+                            .into(imgBackground)
+                        txtTitle.text = it.data?.title
+                        txtSubTitle.text =
+                            getString(
+                                R.string.txtSubtitleMovie, it.data?.releaseDate,
+                                it.data?.runtime?.div(60), it.data?.runtime?.rem(60)
+                            )
+                        txtRating.text =
+                            getString(R.string.txtRating, it.data?.voteAverage?.times(10))
+                        txtQuote.text = it.data?.tagline
+                        txtOverview.text = it.data?.overview
+                        txtStatus.text = it.data?.status
+                        txtBudget.text = getString(R.string.price, priceFormatter(it.data?.budget))
+                        txtRevenue.text =
+                            getString(R.string.price, priceFormatter(it.data?.revenue))
+                    }
+                    Status.ERROR -> {
+                        progressBar.visibility = View.GONE
+                        layoutDetailConstraint.visibility = View.GONE
+                        Toast.makeText(
+                            this,
+                            "There is an error. Please check the internet or contact the system administrator",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         })
     }

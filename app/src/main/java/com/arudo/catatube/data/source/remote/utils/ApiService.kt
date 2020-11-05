@@ -1,10 +1,11 @@
 package com.arudo.catatube.data.source.remote.utils
 
+import androidx.lifecycle.LiveData
 import com.arudo.catatube.data.source.local.entity.MovieEntity
 import com.arudo.catatube.data.source.local.entity.MovieListEntity
 import com.arudo.catatube.data.source.local.entity.TVEntity
 import com.arudo.catatube.data.source.local.entity.TVListEntity
-import retrofit2.Call
+import com.arudo.catatube.data.source.remote.response.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -18,7 +19,7 @@ interface ApiService {
         @Query("include_adult") includeAdult: String,
         @Query("include_video") includeVideo: String,
         @Query("page") page: String,
-    ): Call<MovieListEntity>
+    ): LiveData<ApiResponse<MovieListEntity>>
 
     @GET("discover/tv")
     fun getTelevisionList(
@@ -28,19 +29,19 @@ interface ApiService {
         @Query("page") page: String,
         @Query("timezone") timezone: String,
         @Query("include_null_first_air_dates") includeNullFirstAirDates: String,
-    ): Call<TVListEntity>
+    ): LiveData<ApiResponse<TVListEntity>>
 
     @GET("movie/{movieId}")
     fun getMovieData(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): Call<MovieEntity>
+    ): LiveData<ApiResponse<MovieEntity>>
 
     @GET("tv/{televisionId}")
     fun getTelevisionData(
         @Path("televisionId") televisionId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): Call<TVEntity>
+    ): LiveData<ApiResponse<TVEntity>>
 }

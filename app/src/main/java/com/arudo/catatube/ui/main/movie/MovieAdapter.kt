@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_list_movie_tv.view.*
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private val movieData = ArrayList<MovieResultsItem>()
 
-    fun setData(items: ArrayList<MovieResultsItem>) {
+    fun setData(items: List<MovieResultsItem>) {
         movieData.clear()
         movieData.addAll(items)
         notifyDataSetChanged()

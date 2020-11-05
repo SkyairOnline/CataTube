@@ -6,7 +6,8 @@
     <string name="quote">Quote</string>
     <string name="overview">Overview</string>
     <string name="status">Status</string>
-    <string name="txtSubtitle">%1$s | %2$.0fh %3$.0fm</string>
+    <string name="txtSubtitleMovie">%1$s | %2$.0fh %3$.0fm</string>
+    <string name="txtSubtitleTelevision">%1$s</string>
     <string name="txtRating">Rating: %1$.0f/100%%</string>
     <string name="detail_box">Detail Box</string>
     <string name="detail_activity">Detail CataTube</string>

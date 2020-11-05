@@ -1,5 +1,6 @@
 package com.arudo.catatube.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.data.source.CataTubeRepository
@@ -15,9 +16,9 @@ class ViewModelFactory private constructor(private val cataTubeRepository: CataT
         @Volatile
         private var viewModelFactory: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory {
+        fun getInstance(context: Context): ViewModelFactory {
             return viewModelFactory ?: synchronized(this) {
-                viewModelFactory ?: ViewModelFactory(Injection.provideRepository())
+                viewModelFactory ?: ViewModelFactory(Injection.provideRepository(context))
             }
         }
     }
