@@ -46,7 +46,7 @@ class MainActivityTest {
     @Test
     fun mainActivityMovieDetail() {
         onView(withText("Movie")).perform(click())
-        onView(allOf(withId(R.id.rvMovie), isDisplayed())).perform(
+        onView(withId(R.id.rvMovie)).check(matches(isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 click()
@@ -110,7 +110,7 @@ class MainActivityTest {
     @Test
     fun mainActivityTelevisionDetail() {
         onView(withText("TV Show")).perform(click())
-        onView(allOf(withId(R.id.rvTelevision), isDisplayed())).perform(
+        onView(withId(R.id.rvTelevision)).check(matches(isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
                 click()
