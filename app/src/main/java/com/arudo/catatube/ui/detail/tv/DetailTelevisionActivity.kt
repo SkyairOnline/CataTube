@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
-import com.arudo.catatube.data.vo.Status
 import com.arudo.catatube.viewmodel.ViewModelFactory
+import com.arudo.catatube.vo.Status
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -26,7 +26,8 @@ class DetailTelevisionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_television)
         supportActionBar?.title = getString(R.string.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        progressBar.visibility = View.VISIBLE
+        layoutDetailConstraint.visibility = View.GONE
         detailTelevisionViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(this)
@@ -43,8 +44,6 @@ class DetailTelevisionActivity : AppCompatActivity() {
                         layoutDetailConstraint.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        layoutDetailConstraint.visibility = View.VISIBLE
                         imgShow.tag = it.data?.posterPath
                         Glide.with(this)
                             .load(getString(R.string.photo, it.data?.posterPath))
@@ -80,6 +79,8 @@ class DetailTelevisionActivity : AppCompatActivity() {
                         txtOverview.text = it.data?.overview
                         txtStatus.text = it.data?.status
                         txtType.text = it.data?.type
+                        progressBar.visibility = View.GONE
+                        layoutDetailConstraint.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE

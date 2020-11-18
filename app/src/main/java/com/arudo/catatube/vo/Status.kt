@@ -1,4 +1,4 @@
-package com.arudo.catatube.data.vo
+package com.arudo.catatube.vo
 
 enum class Status {
     SUCCESS,

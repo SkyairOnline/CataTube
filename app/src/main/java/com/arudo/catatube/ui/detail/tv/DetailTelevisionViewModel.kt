@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.arudo.catatube.data.source.CataTubeRepository
 import com.arudo.catatube.data.source.local.entity.TVEntity
-import com.arudo.catatube.data.vo.Resource
+import com.arudo.catatube.vo.Resource
 
 class DetailTelevisionViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
     private val televisionId = MutableLiveData<Int>()

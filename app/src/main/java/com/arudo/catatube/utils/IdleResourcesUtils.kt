@@ -1,4 +1,4 @@
-package com.arudo.catatube.data.source.remote.utils
+package com.arudo.catatube.utils
 
 import androidx.test.espresso.IdlingRegistry
 import com.jakewharton.espresso.OkHttp3IdlingResource

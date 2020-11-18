@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
-import com.arudo.catatube.data.vo.Status
 import com.arudo.catatube.viewmodel.ViewModelFactory
+import com.arudo.catatube.vo.Status
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : Fragment() {
@@ -35,9 +35,9 @@ class MovieFragment : Fragment() {
                         rvMovie.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
+                        it.data?.let { it1 -> movieAdapter.setData(it1) }
                         progressBar.visibility = View.GONE
                         rvMovie.visibility = View.VISIBLE
-                        it.data?.let { it1 -> movieAdapter.setData(it1) }
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE

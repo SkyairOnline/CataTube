@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
-import com.arudo.catatube.data.vo.Status
 import com.arudo.catatube.viewmodel.ViewModelFactory
+import com.arudo.catatube.vo.Status
 import kotlinx.android.synthetic.main.fragment_tv.*
 
 class TvFragment : Fragment() {
@@ -17,6 +17,8 @@ class TvFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        progressBar.visibility = View.VISIBLE
+        rvTelevision.visibility = View.GONE
         tvViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(requireActivity())
@@ -33,9 +35,9 @@ class TvFragment : Fragment() {
                         rvTelevision.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
+                        it.data?.let { it1 -> televisionAdapter.setData(it1) }
                         progressBar.visibility = View.GONE
                         rvTelevision.visibility = View.VISIBLE
-                        it.data?.let { it1 -> televisionAdapter.setData(it1) }
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE

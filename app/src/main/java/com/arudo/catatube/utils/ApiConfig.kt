@@ -1,4 +1,4 @@
-package com.arudo.catatube.data.source.remote.utils
+package com.arudo.catatube.utils
 
 import com.arudo.catatube.BuildConfig
 import okhttp3.HttpUrl.Companion.toHttpUrl

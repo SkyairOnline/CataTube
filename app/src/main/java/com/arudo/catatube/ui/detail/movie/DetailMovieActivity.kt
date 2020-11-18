@@ -1,5 +1,6 @@
 package com.arudo.catatube.ui.detail.movie
 
+import android.icu.math.BigDecimal
 import android.icu.text.DecimalFormat
 import android.os.Build
 import android.os.Bundle
@@ -9,8 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
-import com.arudo.catatube.data.vo.Status
 import com.arudo.catatube.viewmodel.ViewModelFactory
+import com.arudo.catatube.vo.Status
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -31,6 +32,8 @@ class DetailMovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_movie)
         supportActionBar?.title = getString(R.string.detail_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        progressBar.visibility = View.VISIBLE
+        layoutDetailConstraint.visibility = View.GONE
         detailMovieViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(this)
@@ -47,8 +50,6 @@ class DetailMovieActivity : AppCompatActivity() {
                         layoutDetailConstraint.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        layoutDetailConstraint.visibility = View.VISIBLE
                         imgShow.tag = it.data?.posterPath
                         Glide.with(this)
                             .load(getString(R.string.photo, it.data?.posterPath))
@@ -79,9 +80,13 @@ class DetailMovieActivity : AppCompatActivity() {
                         txtQuote.text = it.data?.tagline
                         txtOverview.text = it.data?.overview
                         txtStatus.text = it.data?.status
-                        txtBudget.text = getString(R.string.price, priceFormatter(it.data?.budget))
+                        txtBudget.text = getString(R.string.price,
+                            it.data?.budget?.let { it1 -> priceFormatter(it1) })
                         txtRevenue.text =
-                            getString(R.string.price, priceFormatter(it.data?.revenue))
+                            getString(R.string.price,
+                                it.data?.revenue?.let { it1 -> priceFormatter(it1) })
+                        progressBar.visibility = View.GONE
+                        layoutDetailConstraint.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
@@ -103,8 +108,8 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun priceFormatter(price: Double?): String {
+    private fun priceFormatter(price: Double): String {
         val decimalFormat = DecimalFormat(getString(R.string.patternPrice))
-        return decimalFormat.format(price)
+        return decimalFormat.format(BigDecimal(price))
     }
 }

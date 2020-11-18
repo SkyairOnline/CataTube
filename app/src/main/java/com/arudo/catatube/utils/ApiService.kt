@@ -1,47 +1,46 @@
-package com.arudo.catatube.data.source.remote.utils
+package com.arudo.catatube.utils
 
-import androidx.lifecycle.LiveData
 import com.arudo.catatube.data.source.local.entity.MovieEntity
 import com.arudo.catatube.data.source.local.entity.MovieListEntity
 import com.arudo.catatube.data.source.local.entity.TVEntity
 import com.arudo.catatube.data.source.local.entity.TVListEntity
-import com.arudo.catatube.data.source.remote.response.ApiResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
     @GET("discover/movie")
-    fun getMovieList(
+    suspend fun getMovieList(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("sort_by") sortBy: String,
         @Query("include_adult") includeAdult: String,
         @Query("include_video") includeVideo: String,
         @Query("page") page: String,
-    ): LiveData<ApiResponse<MovieListEntity>>
+    ): Response<MovieListEntity>
 
     @GET("discover/tv")
-    fun getTelevisionList(
+    suspend fun getTelevisionList(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("sort_by") sortBy: String,
         @Query("page") page: String,
         @Query("timezone") timezone: String,
         @Query("include_null_first_air_dates") includeNullFirstAirDates: String,
-    ): LiveData<ApiResponse<TVListEntity>>
+    ): Response<TVListEntity>
 
     @GET("movie/{movieId}")
-    fun getMovieData(
+    suspend fun getMovieData(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): LiveData<ApiResponse<MovieEntity>>
+    ): Response<MovieEntity>
 
     @GET("tv/{televisionId}")
-    fun getTelevisionData(
+    suspend fun getTelevisionData(
         @Path("televisionId") televisionId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): LiveData<ApiResponse<TVEntity>>
+    ): Response<TVEntity>
 }
