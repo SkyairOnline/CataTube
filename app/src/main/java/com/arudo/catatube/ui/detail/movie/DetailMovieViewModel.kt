@@ -1,12 +1,11 @@
 package com.arudo.catatube.ui.detail.movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.arudo.catatube.data.source.CataTubeRepository
+import com.arudo.catatube.data.source.local.entity.FavoriteMovieEntity
 import com.arudo.catatube.data.source.local.entity.MovieEntity
 import com.arudo.catatube.vo.Resource
+import kotlinx.coroutines.launch
 
 class DetailMovieViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
     private val movieId = MutableLiveData<Int>()
@@ -17,5 +16,16 @@ class DetailMovieViewModel(private val cataTubeRepository: CataTubeRepository) :
 
     fun getDetailMovie(): LiveData<Resource<MovieEntity>> = Transformations.switchMap(movieId) {
         cataTubeRepository.getMovieData(it)
+    }
+
+    fun getFavoriteMovie(movieId: Int): LiveData<FavoriteMovieEntity> =
+        cataTubeRepository.getFavoriteMovie(movieId)
+
+    fun setFavoriteMovie(movieId: Int) = viewModelScope.launch {
+        cataTubeRepository.insertMovieFavorite(movieId)
+    }
+
+    fun deleteFavoriteMovie(movieId: Int) = viewModelScope.launch {
+        cataTubeRepository.deleteMovieFavorite(movieId)
     }
 }

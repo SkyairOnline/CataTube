@@ -7,6 +7,8 @@ import com.arudo.catatube.data.source.CataTubeRepository
 import com.arudo.catatube.di.Injection
 import com.arudo.catatube.ui.detail.movie.DetailMovieViewModel
 import com.arudo.catatube.ui.detail.tv.DetailTelevisionViewModel
+import com.arudo.catatube.ui.favorite.movie.MovieFavoriteViewModel
+import com.arudo.catatube.ui.favorite.tv.TvFavoriteViewModel
 import com.arudo.catatube.ui.main.movie.MovieViewModel
 import com.arudo.catatube.ui.main.tv.TvViewModel
 
@@ -37,6 +39,12 @@ class ViewModelFactory private constructor(private val cataTubeRepository: CataT
             }
             modelClass.isAssignableFrom(DetailTelevisionViewModel::class.java) -> {
                 DetailTelevisionViewModel(cataTubeRepository) as T
+            }
+            modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
+                MovieFavoriteViewModel(cataTubeRepository) as T
+            }
+            modelClass.isAssignableFrom(TvFavoriteViewModel::class.java) -> {
+                TvFavoriteViewModel(cataTubeRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

@@ -6,16 +6,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
+import com.arudo.catatube.animation.FloatingActionIconAnimation
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import com.arudo.catatube.vo.Status
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_detail_television.*
 
 class DetailTelevisionActivity : AppCompatActivity() {
     private lateinit var detailTelevisionViewModel: DetailTelevisionViewModel
+    private lateinit var favoriteBtn: FloatingActionButton
+    private lateinit var floatingActionIconAnimation: FloatingActionIconAnimation
+    private var indexFavorite: Boolean = false
 
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
@@ -35,6 +40,9 @@ class DetailTelevisionActivity : AppCompatActivity() {
             DetailTelevisionViewModel::class.java
         )
         val televisionId = intent.extras?.getInt(EXTRA_DETAIL) ?: return
+        favoriteBtn = findViewById(R.id.favoriteBtn)
+        floatingActionIconAnimation = FloatingActionIconAnimation(this)
+        floatingActionIconAnimation.floatingActionButton = favoriteBtn
         detailTelevisionViewModel.setDetailTelevision(televisionId)
         detailTelevisionViewModel.getDetailTelevision().observe(this, {
             if (it != null) {
@@ -92,9 +100,24 @@ class DetailTelevisionActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
-
             }
         })
+        detailTelevisionViewModel.getFavoriteTelevision(televisionId).observe(this, {
+            if (it != null) {
+                indexFavorite = it.id == televisionId
+            }
+        })
+        floatingActionIconAnimation.icon(indexFavorite)
+        favoriteBtn.setOnClickListener {
+            indexFavorite = !indexFavorite
+            floatingActionIconAnimation.icon(indexFavorite)
+            if (indexFavorite) {
+                detailTelevisionViewModel.setFavoriteTelevision(televisionId)
+            } else {
+                detailTelevisionViewModel.deleteFavoriteTelevision(televisionId)
+            }
+
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

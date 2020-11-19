@@ -20,4 +20,6 @@
     <string name="type">Type</string>
     <string name="seasonEpisodeNumber">%1$d Seasons, %2$d Episodes</string>
     <string name="patternPrice">#,###</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="favorite_activity">Favorite CataTube</string>
 </resources>

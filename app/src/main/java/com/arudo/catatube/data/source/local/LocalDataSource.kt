@@ -1,10 +1,7 @@
 package com.arudo.catatube.data.source.local
 
 import androidx.lifecycle.LiveData
-import com.arudo.catatube.data.source.local.entity.MovieEntity
-import com.arudo.catatube.data.source.local.entity.MovieResultsItem
-import com.arudo.catatube.data.source.local.entity.TVEntity
-import com.arudo.catatube.data.source.local.entity.TelevisionResultsItem
+import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.local.room.CataTubeDao
 
 class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) {
@@ -27,9 +24,35 @@ class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) 
 
     fun getMovie(id: Int): LiveData<MovieEntity> = cataTubeDao.getMovie(id)
 
+    fun getMovieFavorite(id: Int): LiveData<FavoriteMovieEntity> = cataTubeDao.getMovieFavorite(id)
+
     fun insertMovie(movie: MovieEntity) = cataTubeDao.insertMovie(movie)
 
     fun getTelevision(id: Int): LiveData<TVEntity> = cataTubeDao.getTelevision(id)
 
+    fun getTelevisionFavorite(id: Int): LiveData<FavoriteTelevisionEntity> =
+        cataTubeDao.getTelevisionFavorite(id)
+
     fun insertTelevision(television: TVEntity) = cataTubeDao.insertTelevision(television)
+
+    fun getMovieFavoriteList(): LiveData<List<MovieEntity>> = cataTubeDao.getMovieFavoriteList()
+
+    fun getTelevisionFavoriteList(): LiveData<List<TVEntity>> =
+        cataTubeDao.getTelevisionFavoriteList()
+
+    suspend fun insertMovieFavorite(movieId: Int) {
+        cataTubeDao.insertFavoriteMovie(FavoriteMovieEntity(movieId))
+    }
+
+    suspend fun insertTelevisionFavorite(televisionId: Int) {
+        cataTubeDao.insertFavoritTelevision(FavoriteTelevisionEntity(televisionId))
+    }
+
+    suspend fun deleteMovieFavorite(movieId: Int) {
+        cataTubeDao.deleteFavoriteMovie(FavoriteMovieEntity(movieId))
+    }
+
+    suspend fun deleteTelevisionFavorite(televisionId: Int) {
+        cataTubeDao.deleteFavoriteTelevision(FavoriteTelevisionEntity(televisionId))
+    }
 }

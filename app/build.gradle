@@ -52,6 +52,7 @@ dependencies {
     implementation "com.jakewharton.espresso:okhttp3-idling-resource:$jakewharton_expresso_version"
     implementation "com.android.support.test.espresso.idling:idling-concurrent:$android_support_test_expresso_idling"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

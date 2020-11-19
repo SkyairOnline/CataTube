@@ -1,14 +1,8 @@
 package com.arudo.catatube.data.source.local.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.arudo.catatube.data.source.local.entity.MovieEntity
-import com.arudo.catatube.data.source.local.entity.MovieResultsItem
-import com.arudo.catatube.data.source.local.entity.TVEntity
-import com.arudo.catatube.data.source.local.entity.TelevisionResultsItem
+import androidx.room.*
+import com.arudo.catatube.data.source.local.entity.*
 
 @Dao
 interface CataTubeDao {
@@ -35,4 +29,28 @@ interface CataTubeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTelevision(television: TVEntity)
+
+    @Query("SELECT * FROM movieentity a join favoritemovieentity b on a.id = b.id")
+    fun getMovieFavoriteList(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT * FROM favoritemovieentity where id = :id")
+    fun getMovieFavorite(id: Int): LiveData<FavoriteMovieEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+
+    @Delete
+    suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+
+    @Query("SELECT * FROM televisionentity a join favoritetelevisionentity b on a.id = b.id")
+    fun getTelevisionFavoriteList(): LiveData<List<TVEntity>>
+
+    @Query("SELECT * FROM favoritetelevisionentity where id = :id")
+    fun getTelevisionFavorite(id: Int): LiveData<FavoriteTelevisionEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavoritTelevision(favoriteTelevision: FavoriteTelevisionEntity)
+
+    @Delete
+    suspend fun deleteFavoriteTelevision(favoriteTelevision: FavoriteTelevisionEntity)
 }
