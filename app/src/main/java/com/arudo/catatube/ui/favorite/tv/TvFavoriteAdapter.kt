@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
 import com.arudo.catatube.data.source.local.entity.TVEntity
@@ -14,13 +16,22 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_list_movie_tv.view.*
 
-class TvFavoriteAdapter : RecyclerView.Adapter<TvFavoriteAdapter.TVFavoriteViewHolder>() {
-    private val televisionFavoriteData = ArrayList<TVEntity>()
+class TvFavoriteAdapter internal constructor() :
+    PagedListAdapter<TVEntity, TvFavoriteAdapter.TVFavoriteViewHolder>(
+        diffCallback
+    ) {
 
-    fun setData(items: List<TVEntity>) {
-        televisionFavoriteData.clear()
-        televisionFavoriteData.addAll(items)
-        notifyDataSetChanged()
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<TVEntity>() {
+            override fun areItemsTheSame(oldItem: TVEntity, newItem: TVEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: TVEntity, newItem: TVEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
     inner class TVFavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -52,9 +63,10 @@ class TvFavoriteAdapter : RecyclerView.Adapter<TvFavoriteAdapter.TVFavoriteViewH
         )
 
     override fun onBindViewHolder(holder: TVFavoriteViewHolder, position: Int) {
-        holder.bind(televisionFavoriteData[position])
+        val televisionFavorite = getItem(position)
+        televisionFavorite?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = televisionFavoriteData.size
+    fun getSwipedData(televisionPosition: Int): TVEntity? = getItem(televisionPosition)
 
 }

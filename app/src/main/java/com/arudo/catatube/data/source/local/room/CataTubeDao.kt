@@ -1,6 +1,7 @@
 package com.arudo.catatube.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.arudo.catatube.data.source.local.entity.*
 
@@ -31,7 +32,7 @@ interface CataTubeDao {
     fun insertTelevision(television: TVEntity)
 
     @Query("SELECT * FROM movieentity a join favoritemovieentity b on a.id = b.id")
-    fun getMovieFavoriteList(): LiveData<List<MovieEntity>>
+    fun getMovieFavoriteList(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM favoritemovieentity where id = :id")
     fun getMovieFavorite(id: Int): LiveData<FavoriteMovieEntity>
@@ -43,7 +44,7 @@ interface CataTubeDao {
     suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 
     @Query("SELECT * FROM televisionentity a join favoritetelevisionentity b on a.id = b.id")
-    fun getTelevisionFavoriteList(): LiveData<List<TVEntity>>
+    fun getTelevisionFavoriteList(): DataSource.Factory<Int, TVEntity>
 
     @Query("SELECT * FROM favoritetelevisionentity where id = :id")
     fun getTelevisionFavorite(id: Int): LiveData<FavoriteTelevisionEntity>

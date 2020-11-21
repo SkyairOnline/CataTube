@@ -26,6 +26,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private lateinit var favoriteBtn: FloatingActionButton
     private lateinit var floatingActionIconAnimation: FloatingActionIconAnimation
     private var indexFavorite: Boolean = false
+    private var nameMovie: String = ""
 
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
@@ -58,6 +59,7 @@ class DetailMovieActivity : AppCompatActivity() {
                         layoutDetailConstraint.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
+                        nameMovie = it.data?.title.toString()
                         imgShow.tag = it.data?.posterPath
                         Glide.with(this)
                             .load(getString(R.string.photo, it.data?.posterPath))
@@ -120,8 +122,18 @@ class DetailMovieActivity : AppCompatActivity() {
             floatingActionIconAnimation.icon(indexFavorite)
             if (indexFavorite) {
                 detailMovieViewModel.setFavoriteMovie(movieId)
+                Toast.makeText(
+                    it.context,
+                    "You just added $nameMovie from your Movie Favorite",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 detailMovieViewModel.deleteFavoriteMovie(movieId)
+                Toast.makeText(
+                    it.context,
+                    "You just removed $nameMovie from your Movie Favorite",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

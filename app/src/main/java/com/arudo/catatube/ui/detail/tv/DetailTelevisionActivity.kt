@@ -21,6 +21,7 @@ class DetailTelevisionActivity : AppCompatActivity() {
     private lateinit var favoriteBtn: FloatingActionButton
     private lateinit var floatingActionIconAnimation: FloatingActionIconAnimation
     private var indexFavorite: Boolean = false
+    private var nameTelevision: String = ""
 
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
@@ -52,6 +53,7 @@ class DetailTelevisionActivity : AppCompatActivity() {
                         layoutDetailConstraint.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
+                        nameTelevision = it.data?.name.toString()
                         imgShow.tag = it.data?.posterPath
                         Glide.with(this)
                             .load(getString(R.string.photo, it.data?.posterPath))
@@ -96,7 +98,7 @@ class DetailTelevisionActivity : AppCompatActivity() {
                         Toast.makeText(
                             this,
                             "There is an error. Please check the internet or contact the system administrator",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -113,8 +115,18 @@ class DetailTelevisionActivity : AppCompatActivity() {
             floatingActionIconAnimation.icon(indexFavorite)
             if (indexFavorite) {
                 detailTelevisionViewModel.setFavoriteTelevision(televisionId)
+                Toast.makeText(
+                    this,
+                    "You just added $nameTelevision from your Movie Favorite",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 detailTelevisionViewModel.deleteFavoriteTelevision(televisionId)
+                Toast.makeText(
+                    this,
+                    "You just removed $nameTelevision from your Movie Favorite",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }

@@ -20,15 +20,4 @@ class FloatingActionIconAnimation(context: Context) {
         val nextAnimation = if (isState) favorite else favoriteBorder
         floatingActionButton?.setImageDrawable(nextAnimation)
     }
-
-    fun animate(isState: Boolean) {
-        val nextAnimation = if (isState) favorite else favoriteBorder
-        animation(nextAnimation)
-    }
-
-    private fun animation(drawable: AnimatedVectorDrawableCompat?) {
-        floatingActionButton?.let {
-            drawable?.start()
-        }
-    }
 }

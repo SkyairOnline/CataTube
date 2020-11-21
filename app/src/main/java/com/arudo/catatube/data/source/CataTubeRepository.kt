@@ -1,6 +1,8 @@
 package com.arudo.catatube.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.arudo.catatube.data.source.local.LocalDataSource
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.remote.RemoteDataSource
@@ -32,7 +34,12 @@ class CataTubeRepository private constructor(
             { localDataSource.insertMovieList(it.results) })
     }
 
-    fun getFavoriteMovieList(): LiveData<List<MovieEntity>> = localDataSource.getMovieFavoriteList()
+    fun getFavoriteMovieList(): LiveData<PagedList<MovieEntity>> {
+        val config =
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20)
+                .setPageSize(20).build()
+        return LivePagedListBuilder(localDataSource.getMovieFavoriteList(), config).build()
+    }
 
     fun getFavoriteMovie(movieId: Int): LiveData<FavoriteMovieEntity> =
         localDataSource.getMovieFavorite(movieId)
@@ -44,8 +51,12 @@ class CataTubeRepository private constructor(
             { localDataSource.insertTelevisionList(it.results) })
     }
 
-    fun getFavoriteTelevisionList(): LiveData<List<TVEntity>> =
-        localDataSource.getTelevisionFavoriteList()
+    fun getFavoriteTelevisionList(): LiveData<PagedList<TVEntity>> {
+        val config =
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(21)
+                .setPageSize(21).build()
+        return LivePagedListBuilder(localDataSource.getTelevisionFavoriteList(), config).build()
+    }
 
     fun getFavoriteTelevision(televisionId: Int): LiveData<FavoriteTelevisionEntity> =
         localDataSource.getTelevisionFavorite(televisionId)

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
 import com.arudo.catatube.data.source.local.entity.MovieEntity
@@ -14,13 +16,20 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_list_movie_tv.view.*
 
-class MovieFavoriteAdapter : RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteViewHolder>() {
-    private val movieFavoriteData = ArrayList<MovieEntity>()
+class MovieFavoriteAdapter internal constructor() :
+    PagedListAdapter<MovieEntity, MovieFavoriteAdapter.MovieFavoriteViewHolder>(diffCallback) {
 
-    fun setData(items: List<MovieEntity>) {
-        movieFavoriteData.clear()
-        movieFavoriteData.addAll(items)
-        notifyDataSetChanged()
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
     inner class MovieFavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -53,9 +62,10 @@ class MovieFavoriteAdapter : RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavo
     }
 
     override fun onBindViewHolder(holder: MovieFavoriteViewHolder, position: Int) {
-        holder.bind(movieFavoriteData[position])
+        val movieFavorite = getItem(position)
+        movieFavorite?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = movieFavoriteData.size
+    fun getSwipedData(moviePosition: Int): MovieEntity? = getItem(moviePosition)
 
 }

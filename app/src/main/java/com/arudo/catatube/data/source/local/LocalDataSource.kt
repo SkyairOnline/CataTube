@@ -1,6 +1,7 @@
 package com.arudo.catatube.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.local.room.CataTubeDao
 
@@ -35,9 +36,10 @@ class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) 
 
     fun insertTelevision(television: TVEntity) = cataTubeDao.insertTelevision(television)
 
-    fun getMovieFavoriteList(): LiveData<List<MovieEntity>> = cataTubeDao.getMovieFavoriteList()
+    fun getMovieFavoriteList(): DataSource.Factory<Int, MovieEntity> =
+        cataTubeDao.getMovieFavoriteList()
 
-    fun getTelevisionFavoriteList(): LiveData<List<TVEntity>> =
+    fun getTelevisionFavoriteList(): DataSource.Factory<Int, TVEntity> =
         cataTubeDao.getTelevisionFavoriteList()
 
     suspend fun insertMovieFavorite(movieId: Int) {
