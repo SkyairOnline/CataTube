@@ -29,5 +29,4 @@ class FavoriteSectionsPagerAdapter(fragmentManager: FragmentManager) :
     fun addFragmentData(title: String) {
         fragmentTitleList.add(title)
     }
-
 }

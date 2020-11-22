@@ -9,8 +9,8 @@ import com.arudo.catatube.data.source.local.entity.MovieEntity
 import kotlinx.coroutines.launch
 
 class MovieFavoriteViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
-    fun getFavoriteMovieList(): LiveData<PagedList<MovieEntity>> =
-        cataTubeRepository.getFavoriteMovieList()
+    fun getFavoriteMovieList(filter: String): LiveData<PagedList<MovieEntity>> =
+        cataTubeRepository.getFavoriteMovieList(filter)
 
     fun deleteFavoriteMovie(movieEntity: MovieEntity) = viewModelScope.launch {
         cataTubeRepository.deleteMovieFavorite(movieEntity.id)

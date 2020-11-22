@@ -3,6 +3,7 @@ package com.arudo.catatube.data.source.local.room
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.arudo.catatube.data.source.local.entity.*
 
 @Dao
@@ -31,8 +32,8 @@ interface CataTubeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTelevision(television: TVEntity)
 
-    @Query("SELECT * FROM movieentity a join favoritemovieentity b on a.id = b.id")
-    fun getMovieFavoriteList(): DataSource.Factory<Int, MovieEntity>
+    @RawQuery(observedEntities = [MovieEntity::class])
+    fun getMovieFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM favoritemovieentity where id = :id")
     fun getMovieFavorite(id: Int): LiveData<FavoriteMovieEntity>
@@ -43,8 +44,8 @@ interface CataTubeDao {
     @Delete
     suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 
-    @Query("SELECT * FROM televisionentity a join favoritetelevisionentity b on a.id = b.id")
-    fun getTelevisionFavoriteList(): DataSource.Factory<Int, TVEntity>
+    @RawQuery(observedEntities = [TVEntity::class])
+    fun getTelevisionFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, TVEntity>
 
     @Query("SELECT * FROM favoritetelevisionentity where id = :id")
     fun getTelevisionFavorite(id: Int): LiveData<FavoriteTelevisionEntity>

@@ -10,12 +10,34 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
+import com.arudo.catatube.utils.ReceiverEvent
+import com.arudo.catatube.utils.SortUtils
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tv_favorite.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class TvFavoriteFragment : Fragment() {
     private lateinit var tvFavoriteViewModel: TvFavoriteViewModel
     private lateinit var tvFavoriteAdapter: TvFavoriteAdapter
+    private var sortedFix = SortUtils.newest
+
+    override fun onStart() {
+        EventBus.getDefault().register(this)
+        super.onStart()
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onMessage(event: ReceiverEvent) {
+        sortedFix = event.message
+        EventBus.getDefault().removeAllStickyEvents()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +52,7 @@ class TvFavoriteFragment : Fragment() {
         tvFavoriteAdapter = TvFavoriteAdapter()
         rvFavoriteTelevision.adapter = tvFavoriteAdapter
         itemTouchHelper.attachToRecyclerView(rvFavoriteTelevision)
-        tvFavoriteViewModel.getFavoriteTelevisionList().observe(viewLifecycleOwner, {
+        tvFavoriteViewModel.getFavoriteTelevisionList(sortedFix).observe(viewLifecycleOwner, {
             if (it != null) {
                 tvFavoriteAdapter.submitList(it)
                 tvFavoriteAdapter.notifyDataSetChanged()
@@ -72,4 +94,5 @@ class TvFavoriteFragment : Fragment() {
             }
         }
     })
+
 }

@@ -22,4 +22,6 @@
     <string name="patternPrice">#,###</string>
     <string name="favorite_button">Favorite Button</string>
     <string name="favorite_activity">Favorite CataTube</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
 </resources>

@@ -7,6 +7,7 @@ import com.arudo.catatube.data.source.local.LocalDataSource
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.remote.RemoteDataSource
 import com.arudo.catatube.utils.NetworkBoundResource
+import com.arudo.catatube.utils.SortUtils
 import com.arudo.catatube.vo.Resource
 
 class CataTubeRepository private constructor(
@@ -34,11 +35,12 @@ class CataTubeRepository private constructor(
             { localDataSource.insertMovieList(it.results) })
     }
 
-    fun getFavoriteMovieList(): LiveData<PagedList<MovieEntity>> {
+    fun getFavoriteMovieList(filter: String): LiveData<PagedList<MovieEntity>> {
         val config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20)
                 .setPageSize(20).build()
-        return LivePagedListBuilder(localDataSource.getMovieFavoriteList(), config).build()
+        val query = SortUtils.getSortedQuery(filter, "movieentity", "favoritemovieentity")
+        return LivePagedListBuilder(localDataSource.getMovieFavoriteList(query), config).build()
     }
 
     fun getFavoriteMovie(movieId: Int): LiveData<FavoriteMovieEntity> =
@@ -51,11 +53,15 @@ class CataTubeRepository private constructor(
             { localDataSource.insertTelevisionList(it.results) })
     }
 
-    fun getFavoriteTelevisionList(): LiveData<PagedList<TVEntity>> {
+    fun getFavoriteTelevisionList(filter: String): LiveData<PagedList<TVEntity>> {
         val config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(21)
                 .setPageSize(21).build()
-        return LivePagedListBuilder(localDataSource.getTelevisionFavoriteList(), config).build()
+        val query = SortUtils.getSortedQuery(filter, "televisionentity", "favoritetelevisionentity")
+        return LivePagedListBuilder(
+            localDataSource.getTelevisionFavoriteList(query),
+            config
+        ).build()
     }
 
     fun getFavoriteTelevision(televisionId: Int): LiveData<FavoriteTelevisionEntity> =

@@ -2,6 +2,7 @@ package com.arudo.catatube.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.local.room.CataTubeDao
 
@@ -36,11 +37,11 @@ class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) 
 
     fun insertTelevision(television: TVEntity) = cataTubeDao.insertTelevision(television)
 
-    fun getMovieFavoriteList(): DataSource.Factory<Int, MovieEntity> =
-        cataTubeDao.getMovieFavoriteList()
+    fun getMovieFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, MovieEntity> =
+        cataTubeDao.getMovieFavoriteList(query)
 
-    fun getTelevisionFavoriteList(): DataSource.Factory<Int, TVEntity> =
-        cataTubeDao.getTelevisionFavoriteList()
+    fun getTelevisionFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, TVEntity> =
+        cataTubeDao.getTelevisionFavoriteList(query)
 
     suspend fun insertMovieFavorite(movieId: Int) {
         cataTubeDao.insertFavoriteMovie(FavoriteMovieEntity(movieId))

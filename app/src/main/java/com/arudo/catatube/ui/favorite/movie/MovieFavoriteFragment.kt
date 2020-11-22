@@ -10,12 +10,34 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
+import com.arudo.catatube.utils.ReceiverEvent
+import com.arudo.catatube.utils.SortUtils
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie_favorite.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MovieFavoriteFragment : Fragment() {
     private lateinit var movieFavoriteViewModel: MovieFavoriteViewModel
     private lateinit var movieFavoriteAdapter: MovieFavoriteAdapter
+    private var sortedFix = SortUtils.newest
+
+    override fun onStart() {
+        EventBus.getDefault().register(this)
+        super.onStart()
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onMessage(event: ReceiverEvent) {
+        sortedFix = event.message
+        EventBus.getDefault().removeAllStickyEvents()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +52,7 @@ class MovieFavoriteFragment : Fragment() {
         movieFavoriteAdapter = MovieFavoriteAdapter()
         rvFavoriteMovie.adapter = movieFavoriteAdapter
         itemTouchHelper.attachToRecyclerView(rvFavoriteMovie)
-        movieFavoriteViewModel.getFavoriteMovieList().observe(viewLifecycleOwner, {
+        movieFavoriteViewModel.getFavoriteMovieList(sortedFix).observe(viewLifecycleOwner, {
             if (it != null) {
                 movieFavoriteAdapter.submitList(it)
                 movieFavoriteAdapter.notifyDataSetChanged()
