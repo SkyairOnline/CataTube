@@ -12,13 +12,14 @@ import org.greenrobot.eventbus.EventBus
 
 class FavoriteActivity : AppCompatActivity() {
     private var sort: String = ""
+    private lateinit var favoriteSectionsPagerAdapter: FavoriteSectionsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
         supportActionBar?.title = getString(R.string.favorite_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val favoriteSectionsPagerAdapter = FavoriteSectionsPagerAdapter(supportFragmentManager)
+        favoriteSectionsPagerAdapter = FavoriteSectionsPagerAdapter(supportFragmentManager)
         favoriteSectionsPagerAdapter.addFragmentData(getString(R.string.movie))
         favoriteSectionsPagerAdapter.addFragmentData(getString(R.string.tv_show))
         viewPager.adapter = favoriteSectionsPagerAdapter
@@ -43,7 +44,7 @@ class FavoriteActivity : AppCompatActivity() {
             R.id.oldest -> sort = SortUtils.oldest
         }
         EventBus.getDefault().postSticky(ReceiverEvent(sort))
-        val favoriteSectionsPagerAdapter = FavoriteSectionsPagerAdapter(supportFragmentManager)
+        favoriteSectionsPagerAdapter = FavoriteSectionsPagerAdapter(supportFragmentManager)
         favoriteSectionsPagerAdapter.addFragmentData(getString(R.string.movie))
         favoriteSectionsPagerAdapter.addFragmentData(getString(R.string.tv_show))
         viewPager.adapter = favoriteSectionsPagerAdapter

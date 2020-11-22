@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
 import com.arudo.catatube.data.source.local.entity.MovieEntity
 import com.arudo.catatube.ui.detail.movie.DetailMovieActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import com.arudo.catatube.utils.PosterContainer
 import kotlinx.android.synthetic.main.item_list_movie_tv.view.*
 
 class MovieFavoriteAdapter internal constructor() :
@@ -35,14 +32,7 @@ class MovieFavoriteAdapter internal constructor() :
     inner class MovieFavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movieEntity: MovieEntity) {
             with(itemView) {
-                Glide.with(itemView.context)
-                    .load(itemView.context.getString(R.string.photo, movieEntity.posterPath))
-                    .apply(
-                        RequestOptions.placeholderOf(R.drawable.ic_image_loading)
-                            .transform(CenterCrop(), RoundedCorners(10))
-                            .error(R.drawable.ic_broken_image)
-                    )
-                    .into(imageShow)
+                PosterContainer(itemView.context, null, movieEntity.posterPath, imageShow)
                 titleShow.text = movieEntity.title
                 overviewShow.text = movieEntity.overview
                 itemView.setOnClickListener {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arudo.catatube.R
 import com.arudo.catatube.utils.ReceiverEvent
 import com.arudo.catatube.utils.SortUtils
+import com.arudo.catatube.utils.ToastMessage
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tv_favorite.*
 import org.greenrobot.eventbus.EventBus
@@ -85,11 +85,10 @@ class TvFavoriteFragment : Fragment() {
             if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
                 val favoriteTelevisionEntity = tvFavoriteAdapter.getSwipedData(swipedPosition)
-                Toast.makeText(
+                ToastMessage(
                     context,
-                    "You just removed ${favoriteTelevisionEntity?.name} from your TV Favorite",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    getString(R.string.removeTelevisionFavorite, favoriteTelevisionEntity?.name)
+                )
                 favoriteTelevisionEntity?.let { tvFavoriteViewModel.deleteFavoriteTelevision(it) }
             }
         }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.arudo.catatube.R
+import com.arudo.catatube.utils.ToastMessage
 import com.arudo.catatube.viewmodel.ViewModelFactory
 import com.arudo.catatube.vo.Status
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -42,11 +42,7 @@ class MovieFragment : Fragment() {
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
                         rvMovie.visibility = View.GONE
-                        Toast.makeText(
-                            context,
-                            "There is an error. Please check the internet or contact the system administrator",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        ToastMessage(context, resources.getString(R.string.errorMessage))
                     }
                 }
             }
