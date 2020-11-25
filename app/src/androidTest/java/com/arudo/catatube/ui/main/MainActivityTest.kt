@@ -97,6 +97,13 @@ class MainActivityTest {
         onView(withId(R.id.rvFavoriteMovie)).check(matches(isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
+                click()
+            )
+        )
+        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(withId(R.id.rvFavoriteMovie)).check(matches(isDisplayed())).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
                 GeneralSwipeAction(
                     Swipe.FAST,
                     GeneralLocation.CENTER,
@@ -176,6 +183,13 @@ class MainActivityTest {
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
         onView(withText(R.string.newest)).perform(click())
         onView(withText(R.string.tv_show)).perform(click())
+        onView(withId(R.id.rvFavoriteTelevision)).check(matches(isDisplayed())).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        onView(isRoot()).perform(ViewActions.pressBack())
         onView(withId(R.id.rvFavoriteTelevision)).check(matches(isDisplayed())).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
