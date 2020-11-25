@@ -5,14 +5,15 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.arudo.catatube.vo.Resource
 import com.arudo.catatube.vo.Status
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 
 fun <ResultType, RequestType> NetworkBoundResource(
     loadFromDatabase: () -> LiveData<ResultType>,
     networkCall: suspend () -> Resource<RequestType>,
-    saveCallResult: suspend (RequestType) -> Unit
+    saveCallResult: suspend (RequestType) -> Unit,
+    dispatchers: CoroutineDispatcher
 ): LiveData<Resource<ResultType>> {
-    return liveData(Dispatchers.IO) {
+    return liveData(dispatchers) {
         emit(Resource.loading())
         val dataSource = loadFromDatabase.invoke().map {
             Resource.success(it)

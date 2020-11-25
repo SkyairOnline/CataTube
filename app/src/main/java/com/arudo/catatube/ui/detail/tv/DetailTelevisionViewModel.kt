@@ -5,9 +5,13 @@ import com.arudo.catatube.data.source.CataTubeRepository
 import com.arudo.catatube.data.source.local.entity.FavoriteTelevisionEntity
 import com.arudo.catatube.data.source.local.entity.TVEntity
 import com.arudo.catatube.vo.Resource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class DetailTelevisionViewModel(private val cataTubeRepository: CataTubeRepository) : ViewModel() {
+class DetailTelevisionViewModel(
+    private val cataTubeRepository: CataTubeRepository,
+    private val defaultDispatcher: CoroutineDispatcher
+) : ViewModel() {
     private val televisionId = MutableLiveData<Int>()
 
     fun setDetailTelevision(televisionId: Int) {
@@ -22,11 +26,11 @@ class DetailTelevisionViewModel(private val cataTubeRepository: CataTubeReposito
     fun getFavoriteTelevision(televisionId: Int): LiveData<FavoriteTelevisionEntity> =
         cataTubeRepository.getFavoriteTelevision(televisionId)
 
-    fun setFavoriteTelevision(televisionId: Int) = viewModelScope.launch {
+    fun setFavoriteTelevision(televisionId: Int) = viewModelScope.launch(defaultDispatcher) {
         cataTubeRepository.insertTelevisionFavorite(televisionId)
     }
 
-    fun deleteFavoriteTelevision(televisionId: Int) = viewModelScope.launch {
+    fun deleteFavoriteTelevision(televisionId: Int) = viewModelScope.launch(defaultDispatcher) {
         cataTubeRepository.deleteTelevisionFavorite(televisionId)
     }
 }

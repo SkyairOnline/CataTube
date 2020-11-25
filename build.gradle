@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.10"
+    ext.kotlin_version = "1.4.20"
     repositories {
         google()
         jcenter()
@@ -47,4 +47,6 @@ ext {
     lifecycle_version = '2.2.0'
     paging_version = '2.1.2'
     greenrobot_version = '3.2.0'
+    mockK_version = '1.9.3'
+    jetbrain_kotlin_version = '1.4.10'
 }

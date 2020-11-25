@@ -7,12 +7,13 @@ import com.arudo.catatube.data.source.local.LocalDataSource
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.remote.RemoteDataSource
 import com.arudo.catatube.utils.NetworkBoundResource
-import com.arudo.catatube.utils.SortUtils
 import com.arudo.catatube.vo.Resource
+import kotlinx.coroutines.CoroutineDispatcher
 
-class CataTubeRepository private constructor(
+class CataTubeRepository(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val coroutineDispatcher: CoroutineDispatcher
 ) {
     companion object {
         @Volatile
@@ -20,10 +21,15 @@ class CataTubeRepository private constructor(
 
         fun getInstance(
             localDataSource: LocalDataSource,
-            remoteDataSource: RemoteDataSource
+            remoteDataSource: RemoteDataSource,
+            coroutineDispatcher: CoroutineDispatcher
         ): CataTubeRepository {
             return cataTubeRepository ?: synchronized(this) {
-                cataTubeRepository ?: CataTubeRepository(localDataSource, remoteDataSource)
+                cataTubeRepository ?: CataTubeRepository(
+                    localDataSource,
+                    remoteDataSource,
+                    coroutineDispatcher
+                )
             }
         }
     }
@@ -32,15 +38,23 @@ class CataTubeRepository private constructor(
         return NetworkBoundResource(
             { localDataSource.getMovieList() },
             { remoteDataSource.getMovieList() },
-            { localDataSource.insertMovieList(it.results) })
+            { localDataSource.insertMovieList(it.results) },
+            coroutineDispatcher
+        )
     }
 
-    fun getFavoriteMovieList(filter: String): LiveData<PagedList<MovieEntity>> {
+    fun getFavoriteMovieListNewest(): LiveData<PagedList<MovieEntity>> {
         val config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20)
                 .setPageSize(20).build()
-        val query = SortUtils.getSortedQuery(filter, "movieentity", "favoritemovieentity")
-        return LivePagedListBuilder(localDataSource.getMovieFavoriteList(query), config).build()
+        return LivePagedListBuilder(localDataSource.getMovieFavoriteListNewest(), config).build()
+    }
+
+    fun getFavoriteMovieListOldest(): LiveData<PagedList<MovieEntity>> {
+        val config =
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(20)
+                .setPageSize(20).build()
+        return LivePagedListBuilder(localDataSource.getMovieFavoriteListOldest(), config).build()
     }
 
     fun getFavoriteMovie(movieId: Int): LiveData<FavoriteMovieEntity> =
@@ -50,16 +64,27 @@ class CataTubeRepository private constructor(
         return NetworkBoundResource(
             { localDataSource.getTelevisionList() },
             { remoteDataSource.getTelevisionList() },
-            { localDataSource.insertTelevisionList(it.results) })
+            { localDataSource.insertTelevisionList(it.results) },
+            coroutineDispatcher
+        )
     }
 
-    fun getFavoriteTelevisionList(filter: String): LiveData<PagedList<TVEntity>> {
+    fun getFavoriteTelevisionListNewest(): LiveData<PagedList<TVEntity>> {
         val config =
             PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(21)
                 .setPageSize(21).build()
-        val query = SortUtils.getSortedQuery(filter, "televisionentity", "favoritetelevisionentity")
         return LivePagedListBuilder(
-            localDataSource.getTelevisionFavoriteList(query),
+            localDataSource.getTelevisionFavoriteListNewest(),
+            config
+        ).build()
+    }
+
+    fun getFavoriteTelevisionListOldest(): LiveData<PagedList<TVEntity>> {
+        val config =
+            PagedList.Config.Builder().setEnablePlaceholders(false).setInitialLoadSizeHint(21)
+                .setPageSize(21).build()
+        return LivePagedListBuilder(
+            localDataSource.getTelevisionFavoriteListOldest(),
             config
         ).build()
     }
@@ -71,14 +96,18 @@ class CataTubeRepository private constructor(
         return NetworkBoundResource(
             { localDataSource.getMovie(movieId) },
             { remoteDataSource.getMovieData(movieId) },
-            { localDataSource.insertMovie(it) })
+            { localDataSource.insertMovie(it) },
+            coroutineDispatcher
+        )
     }
 
     fun getTelevisionData(televisionId: Int): LiveData<Resource<TVEntity>> {
         return NetworkBoundResource(
             { localDataSource.getTelevision(televisionId) },
             { remoteDataSource.getTelevisionData(televisionId) },
-            { localDataSource.insertTelevision(it) })
+            { localDataSource.insertTelevision(it) },
+            coroutineDispatcher
+        )
     }
 
     suspend fun insertMovieFavorite(movieId: Int) {

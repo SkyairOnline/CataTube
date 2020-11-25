@@ -11,6 +11,7 @@ import com.arudo.catatube.ui.favorite.movie.MovieFavoriteViewModel
 import com.arudo.catatube.ui.favorite.tv.TvFavoriteViewModel
 import com.arudo.catatube.ui.main.movie.MovieViewModel
 import com.arudo.catatube.ui.main.tv.TvViewModel
+import kotlinx.coroutines.Dispatchers
 
 class ViewModelFactory private constructor(private val cataTubeRepository: CataTubeRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -35,16 +36,16 @@ class ViewModelFactory private constructor(private val cataTubeRepository: CataT
                 TvViewModel(cataTubeRepository) as T
             }
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
-                DetailMovieViewModel(cataTubeRepository) as T
+                DetailMovieViewModel(cataTubeRepository, Dispatchers.Default) as T
             }
             modelClass.isAssignableFrom(DetailTelevisionViewModel::class.java) -> {
-                DetailTelevisionViewModel(cataTubeRepository) as T
+                DetailTelevisionViewModel(cataTubeRepository, Dispatchers.Default) as T
             }
             modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
-                MovieFavoriteViewModel(cataTubeRepository) as T
+                MovieFavoriteViewModel(cataTubeRepository, Dispatchers.Default) as T
             }
             modelClass.isAssignableFrom(TvFavoriteViewModel::class.java) -> {
-                TvFavoriteViewModel(cataTubeRepository) as T
+                TvFavoriteViewModel(cataTubeRepository, Dispatchers.Default) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

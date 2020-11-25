@@ -2,11 +2,10 @@ package com.arudo.catatube.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.arudo.catatube.data.source.local.entity.*
 import com.arudo.catatube.data.source.local.room.CataTubeDao
 
-class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) {
+class LocalDataSource(private val cataTubeDao: CataTubeDao) {
     companion object {
         private var localDataSource: LocalDataSource? = null
         fun getInstance(cataTubeDao: CataTubeDao): LocalDataSource {
@@ -37,11 +36,17 @@ class LocalDataSource private constructor(private val cataTubeDao: CataTubeDao) 
 
     fun insertTelevision(television: TVEntity) = cataTubeDao.insertTelevision(television)
 
-    fun getMovieFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, MovieEntity> =
-        cataTubeDao.getMovieFavoriteList(query)
+    fun getMovieFavoriteListNewest(): DataSource.Factory<Int, MovieEntity> =
+        cataTubeDao.getMovieFavoriteListNewest()
 
-    fun getTelevisionFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, TVEntity> =
-        cataTubeDao.getTelevisionFavoriteList(query)
+    fun getMovieFavoriteListOldest(): DataSource.Factory<Int, MovieEntity> =
+        cataTubeDao.getMovieFavoriteListOldest()
+
+    fun getTelevisionFavoriteListNewest(): DataSource.Factory<Int, TVEntity> =
+        cataTubeDao.getTelevisionFavoriteListNewest()
+
+    fun getTelevisionFavoriteListOldest(): DataSource.Factory<Int, TVEntity> =
+        cataTubeDao.getTelevisionFavoriteListOldest()
 
     suspend fun insertMovieFavorite(movieId: Int) {
         cataTubeDao.insertFavoriteMovie(FavoriteMovieEntity(movieId))

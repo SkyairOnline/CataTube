@@ -3,7 +3,6 @@ package com.arudo.catatube.data.source.local.room
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteQuery
 import com.arudo.catatube.data.source.local.entity.*
 
 @Dao
@@ -32,8 +31,11 @@ interface CataTubeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTelevision(television: TVEntity)
 
-    @RawQuery(observedEntities = [MovieEntity::class])
-    fun getMovieFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, MovieEntity>
+    @Query("SELECT * From movieentity a join favoritemovieentity b on a.id = b.id Order by a.id desc")
+    fun getMovieFavoriteListNewest(): DataSource.Factory<Int, MovieEntity>
+
+    @Query("SELECT * From movieentity a join favoritemovieentity b on a.id = b.id Order by a.id asc")
+    fun getMovieFavoriteListOldest(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM favoritemovieentity where id = :id")
     fun getMovieFavorite(id: Int): LiveData<FavoriteMovieEntity>
@@ -44,8 +46,11 @@ interface CataTubeDao {
     @Delete
     suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 
-    @RawQuery(observedEntities = [TVEntity::class])
-    fun getTelevisionFavoriteList(query: SupportSQLiteQuery): DataSource.Factory<Int, TVEntity>
+    @Query("SELECT * From televisionentity a join favoritetelevisionentity b on a.id = b.id Order by a.id desc")
+    fun getTelevisionFavoriteListNewest(): DataSource.Factory<Int, TVEntity>
+
+    @Query("SELECT * From televisionentity a join favoritetelevisionentity b on a.id = b.id Order by a.id asc")
+    fun getTelevisionFavoriteListOldest(): DataSource.Factory<Int, TVEntity>
 
     @Query("SELECT * FROM favoritetelevisionentity where id = :id")
     fun getTelevisionFavorite(id: Int): LiveData<FavoriteTelevisionEntity>
