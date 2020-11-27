@@ -19,6 +19,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressBar.visibility = View.VISIBLE
         rvMovie.visibility = View.GONE
+        notificationNothingInScreen.visibility = View.GONE
         movieViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(requireActivity())
@@ -33,16 +34,25 @@ class MovieFragment : Fragment() {
                     Status.LOADING -> {
                         progressBar.visibility = View.VISIBLE
                         rvMovie.visibility = View.GONE
+                        notificationNothingInScreen.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        it.data?.let { it1 -> movieAdapter.setData(it1) }
-                        progressBar.visibility = View.GONE
-                        rvMovie.visibility = View.VISIBLE
+                        if (it.data?.isNotEmpty() == true) {
+                            movieAdapter.setData(it.data)
+                            progressBar.visibility = View.GONE
+                            rvMovie.visibility = View.VISIBLE
+                            notificationNothingInScreen.visibility = View.GONE
+                        } else {
+                            progressBar.visibility = View.GONE
+                            rvMovie.visibility = View.GONE
+                            notificationNothingInScreen.visibility = View.VISIBLE
+                        }
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
                         rvMovie.visibility = View.GONE
                         ToastMessage(context, resources.getString(R.string.errorMessage))
+                        notificationNothingInScreen.visibility = View.VISIBLE
                     }
                 }
             }

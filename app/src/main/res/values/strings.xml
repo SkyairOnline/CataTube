@@ -29,4 +29,5 @@
     <string name="removeMovieFavorite">You just removed %1$s from your Movie Favorite</string>
     <string name="addedTelevisionFavorite">You just added %1$s to your Television Favorite</string>
     <string name="removeTelevisionFavorite">You just removed %1$s from your Television Favorite</string>
+    <string name="there_is_nothing_in_here">There is nothing in here</string>
 </resources>

@@ -19,6 +19,7 @@ class TvFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressBar.visibility = View.VISIBLE
         rvTelevision.visibility = View.GONE
+        notificationNothingInScreen.visibility = View.GONE
         tvViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(requireActivity())
@@ -33,16 +34,25 @@ class TvFragment : Fragment() {
                     Status.LOADING -> {
                         progressBar.visibility = View.VISIBLE
                         rvTelevision.visibility = View.GONE
+                        notificationNothingInScreen.visibility = View.GONE
                     }
                     Status.SUCCESS -> {
-                        it.data?.let { it1 -> televisionAdapter.setData(it1) }
-                        progressBar.visibility = View.GONE
-                        rvTelevision.visibility = View.VISIBLE
+                        if (it.data?.isNotEmpty() == true) {
+                            televisionAdapter.setData(it.data)
+                            progressBar.visibility = View.GONE
+                            rvTelevision.visibility = View.VISIBLE
+                            notificationNothingInScreen.visibility = View.GONE
+                        } else {
+                            progressBar.visibility = View.GONE
+                            rvTelevision.visibility = View.GONE
+                            notificationNothingInScreen.visibility = View.VISIBLE
+                        }
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
                         rvTelevision.visibility = View.GONE
                         ToastMessage(context, resources.getString(R.string.errorMessage))
+                        notificationNothingInScreen.visibility = View.VISIBLE
                     }
                 }
             }

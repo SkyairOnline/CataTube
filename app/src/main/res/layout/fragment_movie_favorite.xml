@@ -15,6 +15,18 @@
         android:progressTint="@color/black"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/notificationNothingInScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/black"
+        android:padding="10dp"
+        android:text="@string/there_is_nothing_in_here"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavoriteMovie"
         android:layout_width="match_parent"

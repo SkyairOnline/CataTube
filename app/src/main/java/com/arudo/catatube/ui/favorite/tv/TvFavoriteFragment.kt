@@ -43,6 +43,7 @@ class TvFavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressBar.visibility = View.VISIBLE
         rvFavoriteTelevision.visibility = View.GONE
+        notificationNothingInScreen.visibility = View.GONE
         tvFavoriteViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(requireActivity())
@@ -54,10 +55,17 @@ class TvFavoriteFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(rvFavoriteTelevision)
         tvFavoriteViewModel.getFavoriteTelevisionList(sortedFix).observe(viewLifecycleOwner, {
             if (it != null) {
-                tvFavoriteAdapter.submitList(it)
-                tvFavoriteAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
-                rvFavoriteTelevision.visibility = View.VISIBLE
+                if (it.size > 0) {
+                    tvFavoriteAdapter.submitList(it)
+                    tvFavoriteAdapter.notifyDataSetChanged()
+                    progressBar.visibility = View.GONE
+                    rvFavoriteTelevision.visibility = View.VISIBLE
+                    notificationNothingInScreen.visibility = View.GONE
+                } else {
+                    notificationNothingInScreen.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    rvFavoriteTelevision.visibility = View.GONE
+                }
             }
         })
     }

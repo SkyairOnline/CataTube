@@ -43,6 +43,7 @@ class MovieFavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progressBar.visibility = View.VISIBLE
         rvFavoriteMovie.visibility = View.GONE
+        notificationNothingInScreen.visibility = View.GONE
         movieFavoriteViewModel = ViewModelProvider(
             this,
             ViewModelFactory.getInstance(requireActivity())
@@ -54,10 +55,17 @@ class MovieFavoriteFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(rvFavoriteMovie)
         movieFavoriteViewModel.getFavoriteMovieList(sortedFix).observe(viewLifecycleOwner, {
             if (it != null) {
-                movieFavoriteAdapter.submitList(it)
-                movieFavoriteAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
-                rvFavoriteMovie.visibility = View.VISIBLE
+                if (it.size > 0) {
+                    movieFavoriteAdapter.submitList(it)
+                    movieFavoriteAdapter.notifyDataSetChanged()
+                    progressBar.visibility = View.GONE
+                    rvFavoriteMovie.visibility = View.VISIBLE
+                    notificationNothingInScreen.visibility = View.GONE
+                } else {
+                    notificationNothingInScreen.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    rvFavoriteMovie.visibility = View.GONE
+                }
             }
         })
     }
